@@ -140,7 +140,7 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
 <body data-theme="verde">
 <div class="app">
   <aside class="side">
-    <div class="marca"><h1>Revisor de Execução Penal</h1><small>ferramenta local · offline · v0.2</small></div>
+    <div class="marca"><h1>Revisor de Execução Penal</h1><small id="marca-sub">ferramenta local · offline</small></div>
     <nav>
       <button class="on" data-t="analise">Análise <span class="k">1</span></button>
       <button data-t="calc">Calculadora <span class="k">2</span></button>
@@ -163,7 +163,7 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
     <section class="tela on" id="analise">
       <div class="drop" tabindex="0" id="drop"><b id="drop-t">Arraste o RSPE (PDF do SEEU) para pré-preencher</b>
         <small id="drop-s">Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.</small>
-        <span class="ou" id="btn-exemplo">preencher com o exemplo de testes (CT-01)</span>
+        <span class="ou" id="btn-pdf" style="font-size:13px;padding:8px 18px;background:var(--acento);color:#fff;border-color:var(--acento)">📄 Selecionar o PDF do atestado…</span>
         <span class="ou" id="btn-limpar" style="border-color:var(--carimbo);color:var(--carimbo)">reiniciar análise (limpar tudo)</span>
         <span class="ou" id="btn-calib" style="display:none">copiar texto lido (calibração)</span></div>
 
@@ -593,8 +593,8 @@ function limparTudo(){
   $("resultado-analise").innerHTML="";
   $("rel-cheio").style.display="none";$("rel-vazio").style.display="block";
   $("btn-calib").style.display="none";
-  $("drop-t").textContent=T?"Arraste o RSPE (PDF do SEEU) para pré-preencher":"Upload de PDF disponível no aplicativo instalado";
-  $("drop-s").textContent=T?"Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.":"Neste modo de visualização, preencha à mão ou use o exemplo de testes.";
+  $("drop-t").textContent=T?"Arraste o RSPE (PDF do SEEU) ou use o botão abaixo":"Você está no modo de visualização (navegador)";
+  $("drop-s").textContent=T?"Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.":"A leitura de PDF só existe no programa (revisor-ep.exe do Release). Aqui, preencha à mão normalmente.";
   atualizaHdr();somas();irPasso(1);}
 $("btn-limpar").onclick=e=>{e.stopPropagation();limparTudo();};
 $("btn-calib").onclick=e=>{e.stopPropagation();
@@ -602,16 +602,6 @@ $("btn-calib").onclick=e=>{e.stopPropagation();
   $("btn-calib").textContent="Copiado ✓ — cole na conversa para eu calibrar o leitor";
   setTimeout(()=>$("btn-calib").textContent="copiar texto lido (calibração)",2500);};
 
-/* ---- exemplo de testes (opcional, explícito) ---- */
-$("btn-exemplo").onclick=e=>{e.stopPropagation();
-  $("acoes").innerHTML="";seq=0;
-  novaAcao({num:"0001-CT01 (furto §4º)",cap:"comum",viol:"n",a:2,m:0,d:0});
-  novaAcao({num:"0002-CT01 (roubo §2º,II)",cap:"comum",viol:"s",a:4,m:10,d:2});
-  $("w-nome").value="Exemplo CT-01";$("w-proc").value="0001112-XX.2021";
-  $("w-ca").value=4;$("w-cm").value=0;$("w-cd").value=26;$("w-rem").value=49;
-  $("w-rei").value="r";$("w-reg").value="aberto";$("w-falta").value="2024-04-15";$("w-comut").value="s";
-  $("x-ca").value=3;$("x-cm").value=1;$("x-cd").value=0;$("x-rem").value=33;$("x-reg").value="fechado";$("x-rei").value="r";
-  atualizaHdr();somas();};
 
 /* ================= CALCULADORA ================= */
 /* Progressão */
@@ -738,8 +728,8 @@ async function checarAtualizacao(manual){if(!T)return;
 
 const T=window.__TAURI__;
 async function boot(){
-  if(!T){$("selo-check").style.display="none";$("drop-t").textContent="Upload de PDF disponível no aplicativo instalado";
-    $("drop-s").textContent="Neste modo de visualização, preencha à mão ou use o exemplo de testes.";return;}
+  if(!T){$("selo-check").style.display="none";$("btn-pdf").style.display="none";$("drop-t").textContent="Você está no modo de visualização (navegador)";
+    $("drop-s").textContent="A leitura de PDF só existe no programa: baixe o revisor-ep.exe no Release do GitHub e abra-o — lá o botão \"Selecionar o PDF\" aparece. Aqui, preencha à mão normalmente.";return;}
   await carregaBase();
   $("selo-check").onclick=()=>checarAtualizacao(true);
   checarAtualizacao(false);
@@ -748,7 +738,18 @@ async function boot(){
     try{const tx=await T.core.invoke("parse_pdf",{path:sel});limparTudo();TEXTO_PDF=tx;preencher(tx);}
     catch(err){$("drop-t").textContent="Falha na leitura";$("drop-s").textContent=String(err);}};
   $("drop").onclick=abrir;
-  $("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")abrir();};}
+  $("btn-pdf").onclick=e=>{e.stopPropagation();abrir();};
+  $("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")abrir();};
+  try{ // arrastar-e-soltar nativo (evento do Tauri; se indisponível, o botão cobre)
+    T.event.listen("tauri://drag-drop",async ev=>{
+      const p=(ev.payload&&ev.payload.paths)||[];
+      const pdf=p.find(x=>x.toLowerCase().endsWith(".pdf"));
+      if(!pdf)return;
+      $("drop-t").textContent="Lendo o atestado…";
+      try{const tx=await T.core.invoke("parse_pdf",{path:pdf});limparTudo();TEXTO_PDF=tx;preencher(tx);}
+      catch(err){$("drop-t").textContent="Falha na leitura";$("drop-s").textContent=String(err);}
+    });
+  }catch(e){}}
 function preencher(t){
   let n=0;const pega=(re)=>{const m=t.match(re);return m?m:null;};
   const nome=pega(/Nome(?: do Reeducando)?[:\\s]+([A-ZÀ-Ú][A-Za-zÀ-ú \\.]{4,60})/);
