@@ -1,6 +1,6 @@
 {
  "meta": {
-  "versao": "2026.08.3",
+  "versao": "2026.08.5",
   "schema_version": 1,
   "publicado_em": "2026-08-16",
   "dossies_fonte": [
@@ -17,7 +17,7 @@
    "data_do_decreto": "requisitos de indulto/comutação aferidos no marco do decreto",
    "data_da_falta": "cometimento; fuga = infração permanente, protrai até a recaptura (STJ AgRg HC 779723; HC 527625)"
   },
-  "changelog": "Novo bloco feed (atualizações jurisprudenciais curadas, renderizadas na aba Precedentes do app)"
+  "changelog": "Vigilancia 16/08/2026 incorporada: 14 leis datadas por DOU (Planalto/Camara); CORRECAO: vigencia da Lei 15.358 e 25/03/2026 (DOU), nao 24/03; Temas 1367 e 1405 transitados viram regra (livramento/prescricao-multa); P-12 fechada (CP art.90 verbatim); vigilancia: sai 1367/1405, entram Temas 1454 e 1408/STF, Tema 1457 datado 07/08/2026; feed +13 itens (STF/STJ/TJs jul-ago/2026); nota do art.6 (audiencia de justificacao, TJSC)"
  },
  "prescricao": {
   "prazos_art109": [
@@ -125,9 +125,10 @@
    "fonte": "STJ RHC 58726; AgRg REsp 2214069 (2026); AgRg HC 779723"
   },
   "multa": {
-   "isolada_anos": 2,
-   "cumulativa": "prazo_da_ppl",
-   "fonte": "CP art.114"
+   "isolada": "prazo do CP art. 114 (Tema 1405/STJ)",
+   "cumulativa": "prazo_da_ppl (CP art.114,II)",
+   "tese_tema_1405": "A alteração promovida no art. 51 do Código Penal não afastou o caráter penal da multa, a qual permanece como sanção criminal. Em razão disso, embora à sua execução sejam aplicáveis as causas suspensivas da prescrição previstas na Lei n. 6.830/1980, bem como as causas interruptivas estabelecidas no art. 174 do Código Tributário Nacional, o prazo prescricional da multa continua sendo regido pelo art. 114, incisos I e II, do Código Penal.",
+   "fonte": "STJ Tema 1405 (REsp 2.225.431, 3a Secao, transitado); CP art. 114"
   },
   "prd": {
    "regra": "mesmos_prazos_ppl",
@@ -143,14 +144,14 @@
     "hediondo": {
      "primario": "2/5",
      "reincidente": "3/5",
-     "desde": "[CONFERIR DOU Lei 11.464/2007]",
-     "fonte": "Lei 11.464/2007"
+     "desde": "2007-03-29",
+     "fonte": "Lei 11.464/2007 (DOU 29/03/2007, ed. extra)"
     }
    },
    {
     "id": "era2",
     "fatos_de": "2020-01-23",
-    "fatos_ate": "2026-03-23",
+    "fatos_ate": "2026-03-24",
     "fonte": "Lei 13.964/2019",
     "fracoes": {
      "primario_sem_violencia": "16%",
@@ -180,16 +181,16 @@
      "fracao": "55%",
      "vigente": [
       "2024-10-09",
-      "2026-03-23"
+      "2026-03-24"
      ],
      "fonte": "Lei 14.994/2024, art.112,VI-A (revogado pela 15.358/2026)"
     }
    },
    {
     "id": "era3a",
-    "fatos_de": "2026-03-24",
+    "fatos_de": "2026-03-25",
     "fatos_ate": "2026-05-07",
-    "fonte": "Lei 15.358/2026 (DOU 24/03/2026)",
+    "fonte": "Lei 15.358/2026 (DOU 25/03/2026, vigor na publicação)",
     "delta": {
      "hediondo_primario": "70%",
      "hediondo_morte_primario": "75%",
@@ -222,7 +223,7 @@
   ],
   "regra_selecao": {
    "metodo": "por_condenacao_menor_fracao_entre_eras_aplicaveis",
-   "fonte": "STJ Tema 1354; STF RE 1531595 (sem lex tertia)"
+   "fonte": "STJ Tema 1354 (REsp 2.037.377 e 2.037.447/SC, 3a Secao, j. 18/06/2026, DJe 02/07/2026); STF RE 1531595 (sem lex tertia)"
   },
   "mapeamento": "por_conteudo_nunca_pelo_numero_do_inciso",
   "exame_criminologico": {
@@ -299,13 +300,19 @@
    "fonte": "CP arts.86-88; LEP art.140"
   },
   "extincao_fim_periodo_prova": {
-   "dispositivo": "[CONFERIR CP art.90]",
-   "pendencia": "P-12"
+   "dispositivo": "CP art. 90",
+   "teor": "Se até o seu término o livramento não é revogado, considera-se extinta a pena privativa de liberdade.",
+   "fonte": "https://www.planalto.gov.br/ccivil_03/decreto-lei/del2848compilado.htm (P-12 fechada, vigilancia 16/08/2026)"
   },
   "prorrogacao_por_crime_sem_transito": {
    "status": "sem_precedente_qualificado_na_base",
    "exibir_nota": true,
    "pendencia": "P-13"
+  },
+  "crime_no_curso_do_lc": {
+   "regra": "termo inicial da pena do novo crime = dia subsequente ao fim do periodo de prova (penas nao unificadas nao correm simultaneas)",
+   "tese_tema_1367": "O cumprimento de pena relativa a delito praticado no curso de livramento condicional terá como seu termo inicial o dia subsequente ao fim do período de prova, dada a impossibilidade de cumprimento simultâneo de duas penas não unificadas.",
+   "fonte": "STJ Tema 1367 (REsp 2.200.477, 2.201.422, 2.205.262, 3a Secao, Rel. Min. Sebastiao Reis Junior, j. 07/05/2026, transitado)"
   }
  },
  "decretos": {
@@ -365,7 +372,8 @@
      ],
      "criterio": "ocorrencia_na_janela (Tema 1195 retificado, EDcl REsp 2.011.706/MG, DJe 22/06/2026)",
      "excecao_mora_estatal": true,
-     "pos_publicacao_nao_impede": "art.6º,p.u. — REGRA DE OURO"
+     "pos_publicacao_nao_impede": "art.6º,p.u. — REGRA DE OURO",
+     "nota_defensiva": "A sancao impeditiva exige reconhecimento em AUDIENCIA DE JUSTIFICACAO com contraditorio; manifestacao escrita nao basta (TJSC, 6a Cam. Crim., 11/08/2026)"
     },
     "soma_art7": {
      "ate": "2025-12-25",
@@ -593,7 +601,7 @@
    },
    "restritiva": {
     "ancora": "data_do_decreto",
-    "fonte": "corrente TJ (ex.: TJRJ)"
+    "fonte": "corrente TJ (ex.: TJRJ); TJSP DEECRIM UR3, 20/07/2026 (hediondez na data do decreto — corrente viva)"
    },
    "saida": "exibir_ambos_cenarios_com_precedentes"
   },
@@ -614,15 +622,15 @@
    {
     "inc": "I",
     "disp": "+121§2,VI (feminicidio qualif.)",
-    "desde": "[CONFERIR DOU 2015]",
+    "desde": "2015-03-10",
     "ate": "14.994/2024",
-    "fonte": "Lei 13.104/2015"
+    "fonte": "Lei 13.104/2015 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "I",
     "disp": "+121§2,VII (agentes seguranca)",
-    "desde": "[CONFERIR DOU 2015]",
-    "fonte": "Lei 13.142/2015"
+    "desde": "2015-07-07",
+    "fonte": "Lei 13.142/2015 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "I",
@@ -633,8 +641,9 @@
    {
     "inc": "I",
     "disp": "+121§2,IX (menor14)",
-    "desde": "[CONFERIR clausula de vigencia]",
-    "fonte": "Lei 14.344/2022 (tem art. de vigencia propria)"
+    "desde": "2022-07-09",
+    "fonte": "Lei 14.344/2022 (tem art. de vigencia propria)",
+    "alerta": "vigencia calculada (DOU 25/05/2022 + 45d, LC 95/98) — conferir antes de usar em calculo"
    },
    {
     "inc": "I",
@@ -645,27 +654,27 @@
    {
     "inc": "I",
     "disp": "TODO o 121§2 (qualquer qualificadora)",
-    "desde": "[CONFERIR DOU 2025]",
-    "fonte": "Lei 15.159/2025",
+    "desde": "2025-07-04",
+    "fonte": "Lei 15.159/2025 — DOU conferido (vigilância 16/08/2026)",
     "alerta": "gravosa; so fatos posteriores"
    },
    {
     "inc": "I-A",
     "disp": "129§2/§3 contra agentes seguranca (142/144 CF, sist.prisional, FNSP) e familiares",
-    "desde": "[CONFERIR DOU 2015]",
-    "fonte": "Lei 13.142/2015"
+    "desde": "2015-07-07",
+    "fonte": "Lei 13.142/2015 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "I-A,b",
     "disp": "+membros Judiciario/MP/Defensoria/Adv.Publica/oficial justica",
-    "desde": "[CONFERIR DOU 2025]",
-    "fonte": "Lei 15.134/2025"
+    "desde": "2025-05-07",
+    "fonte": "Lei 15.134/2025 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "I-A,c",
     "disp": "+em dependencias de instituicao de ensino",
-    "desde": "[CONFERIR DOU 2025]",
-    "fonte": "Lei 15.159/2025"
+    "desde": "2025-07-04",
+    "fonte": "Lei 15.159/2025 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "I-B",
@@ -676,8 +685,8 @@
    {
     "inc": "I-C",
     "disp": "vicaricidio (CP 121-B)",
-    "desde": "[CONFERIR DOU 2026]",
-    "fonte": "Lei 15.384/2026"
+    "desde": "2026-04-10",
+    "fonte": "Lei 15.384/2026 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "II",
@@ -744,14 +753,14 @@
    {
     "inc": "VII-B",
     "disp": "falsificacao produto terapeutico/medicinal 273",
-    "desde": "[CONFERIR DOU 1998]",
-    "fonte": "Lei 9.695/1998"
+    "desde": "1998-08-21",
+    "fonte": "Lei 9.695/1998 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "VIII",
     "disp": "favorecimento prostituicao crianca/vulneravel 218-B",
-    "desde": "[CONFERIR DOU 2014]",
-    "fonte": "Lei 12.978/2014"
+    "desde": "2014-05-22",
+    "fonte": "Lei 12.978/2014 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "IX",
@@ -762,20 +771,20 @@
    {
     "inc": "X",
     "disp": "induzimento suicidio/automutilacao via internet 122 caput/§4",
-    "desde": "[CONFERIR DOU 2024]",
-    "fonte": "Lei 14.811/2024"
+    "desde": "2024-01-15",
+    "fonte": "Lei 14.811/2024 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "XI",
     "disp": "sequestro/carcere privado contra menor de 18 (148§1,IV)",
-    "desde": "[CONFERIR DOU 2024]",
-    "fonte": "Lei 14.811/2024"
+    "desde": "2024-01-15",
+    "fonte": "Lei 14.811/2024 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "XII",
     "disp": "trafico de pessoas contra crianca/adolescente 149-A",
-    "desde": "[CONFERIR DOU 2024]",
-    "fonte": "Lei 14.811/2024"
+    "desde": "2024-01-15",
+    "fonte": "Lei 14.811/2024 — DOU conferido (vigilância 16/08/2026)"
    }
   ],
   "rol_paragrafo_unico": [
@@ -819,26 +828,28 @@
    {
     "inc": "p.u. VI",
     "disp": "crimes do CPM com identidade aos do art.1",
-    "desde": "[CONFERIR DOU 2023]",
-    "fonte": "Lei 14.688/2023"
+    "desde": "2023-11-20",
+    "fonte": "Lei 14.688/2023",
+    "alerta": "vigencia calculada (DOU 21/09/2023 + 60d) — conferir antes de usar em calculo"
    },
    {
     "inc": "p.u. VII",
     "disp": "ECA 240§1 e 241-B (pornografia infantil)",
-    "desde": "[CONFERIR DOU 2024]",
-    "fonte": "Lei 14.811/2024"
+    "desde": "2024-01-15",
+    "fonte": "Lei 14.811/2024 — DOU conferido (vigilância 16/08/2026)"
    },
    {
     "inc": "p.u. VII",
     "disp": "ampliado: ECA 240, 241, 241-A, 241-B, 241-D, 244-A",
-    "desde": "[CONFERIR DOU 2026]",
-    "fonte": "Lei 15.487/2026"
+    "desde": "2026-08-07",
+    "fonte": "Lei 15.487/2026, art. 4º (DOU 07/08/2026) — apurado na vigilância de 16/08/2026; conferir cláusula de vigência na íntegra",
+    "alerta": "gravosa; só fatos a partir da vigência"
    },
    {
     "inc": "p.u. VIII",
     "disp": "dominio social estruturado e favorecimento (Lei 15.358, arts.2/3)",
-    "desde": "2026-03-24",
-    "fonte": "Lei 15.358/2026"
+    "desde": "2026-03-25",
+    "fonte": "Lei 15.358/2026 — DOU 25/03/2026 (vigor na publicação)"
    }
   ],
   "equiparados": {
@@ -849,14 +860,14 @@
    {
     "regra": "integralmente fechado",
     "desde": "1990-07-26",
-    "ate": "[CONFERIR DOU 11.464/2007]",
+    "ate": "2007-03-28",
     "nota": "inconstitucional HC 82.959/STF"
    },
    {
     "regra": "inicialmente fechado + 2/5-3/5",
-    "desde": "[CONFERIR DOU 2007-03]",
+    "desde": "2007-03-29",
     "ate": "2020-01-22",
-    "fonte": "Lei 11.464/2007; SV 26"
+    "fonte": "Lei 11.464/2007 (DOU 29/03/2007, ed. extra); SV 26"
    },
    {
     "regra": "revogado §2 - frac. no art.112 LEP",
@@ -912,9 +923,143 @@
    "termos": [
     "indulto natalino decreto 2026"
    ]
+  },
+  {
+   "id": "P-16",
+   "objeto": "Tema 1457/STJ (REsp 2.266.131, Rel. Min. Rogerio Schietti, afetado 07/08/2026) — data-base na descontinuidade da prisao: prisao cautelar ou retorno para a pena definitiva? Sem suspensao de processos.",
+   "afeta": [
+    "progressao.data_base"
+   ],
+   "tribunais": [
+    "STJ"
+   ],
+   "termos": [
+    "Tema 1457",
+    "data-base descontinuidade prisão"
+   ]
+  },
+  {
+   "id": "P-18",
+   "objeto": "Tema 1454/STF — detracao de cautelar restritiva (RG sem merito em 10/08/2026)",
+   "afeta": [
+    "prescricao",
+    "calculadora.detracao"
+   ],
+   "tribunais": [
+    "STF"
+   ],
+   "termos": [
+    "Tema 1454",
+    "detração medida cautelar"
+   ]
+  },
+  {
+   "id": "P-19",
+   "objeto": "Tema 1408/STF (RE 1.536.743) — exame criminologico da Lei 14.843/2024 x art. 5o, XL (RG sem merito)",
+   "afeta": [
+    "progressao.exame_criminologico"
+   ],
+   "tribunais": [
+    "STF"
+   ],
+   "termos": [
+    "Tema 1408",
+    "exame criminológico retroatividade"
+   ]
   }
  ],
  "feed": [
+  {
+   "data": "11/08/26",
+   "tribunal": "TJSC",
+   "titulo": "Comutação (Dec. 12.790/2025) — falta grave sem audiência de justificação não obsta o benefício",
+   "resumo": "6ª Câmara Criminal: o art. 6º exige sanção reconhecida em audiência de justificação com contraditório; mera manifestação escrita da defesa não basta. Juízo da execução deve reavaliar a comutação.",
+   "url": "https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/download_inteiro_teor&id_jurisprudencia=321786471604754822725891137540"
+  },
+  {
+   "data": "07/08/26",
+   "tribunal": "Legislação",
+   "titulo": "Lei 15.487/2026 amplia a hediondez dos crimes do ECA",
+   "resumo": "Pornografia infantil e correlatos (ECA arts. 240, 241, 241-A, 241-B, 241-D e 244-A) passam ao rol de equiparados via art. 1º da Lei 8.072/90. Gravosa: alcança fatos a partir da vigência (DOU 07/08/2026).",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l8072.htm"
+  },
+  {
+   "data": "07/08/26",
+   "tribunal": "STJ",
+   "titulo": "Tema 1457 afetado — data-base em prisão descontínua",
+   "resumo": "Terceira Seção afetou o REsp 2.266.131 (Rel. Min. Rogerio Schietti Cruz) para definir se a data-base dos benefícios, havendo descontinuidade da prisão, é a da prisão cautelar ou a do retorno para cumprir a pena definitiva. Sem suspensão de processos. Acompanhar.",
+   "url": "https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/07082026-Tribunal-vai-definir-data-base-para-beneficios-da-execucao-penal-em-caso-de-prisao-descontinua.aspx"
+  },
+  {
+   "data": "07/08/26",
+   "tribunal": "STF",
+   "titulo": "EP 98 — Lei 15.402/2026 segue suspensa nas execuções do STF até o Plenário (ADIs 7966/7967)",
+   "resumo": "Decisão do Min. Alexandre de Moraes registra a suspensão da aplicação da Lei 15.402/2026 na execução (12/05/2026) até julgamento das ADIs pelo Plenário; sem data de mérito. Fora das EPs do STF a lei segue vigente.",
+   "url": "http://portal.stf.jus.br/processos/downloadPeca.asp?id=15389142169&ext=.pdf"
+  },
+  {
+   "data": "07/08/26",
+   "tribunal": "TJGO",
+   "titulo": "Latrocínio anterior a 2019 — fração 2/5; Leis 13.964/19 e 15.358/26 não retroagem",
+   "resumo": "2ª Câmara Criminal: crime hediondo com morte cometido antes do Pacote Anticrime, primário, progride com 2/5 (art. 2º, §2º, Lei 8.072/90, red. Lei 11.464/07); vedados 50% e 75% por irretroatividade; descabido 1/6.",
+   "url": "https://api.jusratio.com.br/v1/docs/tjgo-acordao-55263383220268090000/inteiro-teor"
+  },
+  {
+   "data": "29/07/26",
+   "tribunal": "STJ",
+   "titulo": "Tema 1405 — prescrição da pena de multa segue o CP art. 114",
+   "resumo": "Tese: \"A alteração promovida no art. 51 do Código Penal não afastou o caráter penal da multa, a qual permanece como sanção criminal. Em razão disso, embora à sua execução sejam aplicáveis as causas suspensivas da prescrição previstas na Lei n. 6.830/1980, bem como as causas interruptivas estabelecidas no art. 174 do Código Tributário Nacional, o prazo prescricional da multa continua sendo regido pelo art. 114, incisos I e II, do Código Penal.\" (3ª Seção, REsp 2.225.431; data indicada = notícia STJ dos repetitivos do 1º semestre).",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1405&cod_tema_final=1405"
+  },
+  {
+   "data": "29/07/26",
+   "tribunal": "TJTO",
+   "titulo": "Saída temporária — restrições da Lei 14.843/2024 não retroagem; semiaberto harmonizado mantém direitos",
+   "resumo": "Turmas das Câmaras Criminais: supressão de hipóteses de saída temporária é novatio legis in pejus; fatos de 2018/2022 seguem a redação anterior do art. 122 da LEP; ausência de vagas não restringe benefícios.",
+   "url": "https://jurisprudencia.tjto.jus.br/viewFileDoc.php?uuid=64a00f1d11fa91049b251984fea31891"
+  },
+  {
+   "data": "28/07/26",
+   "tribunal": "TJSC",
+   "titulo": "Decreto 12.790/2025 — fuga em set/out 2025 impede indulto/comutação; sem retroatividade gravosa",
+   "resumo": "2ª Câmara Criminal: falta grave nos 12 meses anteriores a 25/12/2025 impede o benefício; o decreto não retroage, apenas fixa requisito subjetivo; p.u. do art. 6º só alcança faltas posteriores ao decreto (Tema 1195).",
+   "url": "https://eprocwebcon.tjsc.jus.br/consulta1g/externo_controlador.php?acao=jurisprudencia@jurisprudencia/download_inteiro_teor&id_jurisprudencia=321785270850367604729256377039"
+  },
+  {
+   "data": "22/07/26",
+   "tribunal": "TJPB",
+   "titulo": "Prescrição da falta grave — 3 anos (CP art. 109, VI) contados do fato; regressão cautelar desconstituída",
+   "resumo": "Câmara Criminal: falta por novo crime doloso é instantânea; demora na comunicação e ação penal em curso não suspendem nem interrompem; indulto a reapreciar após atualização dos cálculos.",
+   "url": "https://pje-jurisprudencia.tjpb.jus.br/jurisprudencia/view/AZ-MEChLoLAH-JnEMztx"
+  },
+  {
+   "data": "20/07/26",
+   "tribunal": "TJSP",
+   "titulo": "Indulto 2025 — hediondez aferida na data do decreto, não na do fato",
+   "resumo": "DEECRIM UR3 (Núcleo 4.0): roubo majorado que passou a hediondo impede a comutação (art. 1º, I, Dec. 12.790/2025); exige 2/3 do crime impeditivo (art. 7º, p.u.); sem retroatividade penal, por ser norma infralegal de clemência.",
+   "url": "https://esaj.tjsp.jus.br/cjsg/getArquivo.do?cdAcordao=20748135&cdForo=0"
+  },
+  {
+   "data": "15/07/26",
+   "tribunal": "TJDFT",
+   "titulo": "Indulto 2025 — Tema 1195 retificado aplicado; vedação do art. 6º é pessoal, não por pena",
+   "resumo": "2ª Turma Criminal: falta grave (crime doloso) no período sensível, homologada após o decreto, obsta o indulto sem mora estatal; inadmissível indulto individualizado por pena. Transcreve a tese retificada do Tema 1195.",
+   "url": "https://jurisdf.tjdft.jus.br/api/v1/pesquisa/download/eea78ff2-5d1f-4272-b06a-48559414f538"
+  },
+  {
+   "data": "14/07/26",
+   "tribunal": "TJMT",
+   "titulo": "Exame criminológico — Lei 14.843/2024 não retroage; gravidade abstrata e reincidência não bastam",
+   "resumo": "1ª Câmara Criminal: exame só com fundamentação concreta, individualizada e contemporânea (SV 26; Súmula 439/STJ); progressão mantida sem exame.",
+   "url": "https://api.jusratio.com.br/v1/docs/tjmt-acordao-383238367/inteiro-teor"
+  },
+  {
+   "data": "02/07/26",
+   "tribunal": "STJ",
+   "titulo": "Tema 1354 — percentuais distintos por condenação na mesma execução",
+   "resumo": "REsp 2.037.377 e 2.037.447/SC, Terceira Seção, j. 18/06/2026, DJe 02/07/2026: aplica-se a cada condenação, isoladamente, a norma mais favorável — ultratividade do 1/6 e retroatividade da Lei 13.964/2019.",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1354&cod_tema_final=1354"
+  },
   {
    "data": "22/06/26",
    "tribunal": "STJ",
@@ -923,11 +1068,11 @@
    "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195"
   },
   {
-   "data": "2026",
+   "data": "27/05/26",
    "tribunal": "STJ",
-   "titulo": "Tema 1354 — percentuais distintos por condenação na mesma execução",
-   "resumo": "Terceira Seção: aplica-se a cada condenação, isoladamente, a norma mais favorável — retroatividade da Lei 13.964/2019 e ultratividade da redação anterior do art. 112 da LEP.",
-   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1354&cod_tema_final=1354"
+   "titulo": "Tema 1195 aplicado — falta grave no período sensível obsta o indulto mesmo homologada depois",
+   "resumo": "5ª Turma (AgRg no HC 1.044.429, Rel. Min. Ribeiro Dantas): homologação posterior ao decreto não afasta o óbice se a falta ocorreu nos 12 meses anteriores; cita REsp 2.011.706/MG (Tema 1195).",
+   "url": "https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202504035162&dt_publicacao=02/06/2026"
   },
   {
    "data": "08/05/26",
@@ -937,10 +1082,17 @@
    "url": "https://www.legjur.com/legislacao/art/lei_00072101984-112"
   },
   {
-   "data": "24/03/26",
+   "data": "07/05/26",
+   "tribunal": "STJ",
+   "titulo": "Tema 1367 — pena por crime cometido no livramento começa no dia seguinte ao fim do período de prova",
+   "resumo": "Tese: \"O cumprimento de pena relativa a delito praticado no curso de livramento condicional terá como seu termo inicial o dia subsequente ao fim do período de prova, dada a impossibilidade de cumprimento simultâneo de duas penas não unificadas.\" (3ª Seção, Rel. Min. Sebastião Reis Júnior; trânsito em julgado).",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1367&cod_tema_final=1367"
+  },
+  {
+   "data": "25/03/26",
    "tribunal": "Legislação",
    "titulo": "Lei 15.358/2026 (Antifacção) eleva frações de hediondos e cria p.u. VIII na 8.072",
-   "resumo": "Progressão de hediondos a 70/75/80/85% para fatos posteriores; feminicídio migra para o inciso VI, d; domínio social estruturado entra no rol de equiparados.",
+   "resumo": "Progressão de hediondos a 70/75/80/85% para fatos a partir de 25/03/2026 (DOU); feminicídio migra para o inciso VI, d; domínio social estruturado entra no rol de equiparados.",
    "url": "https://www.planalto.gov.br/ccivil_03/leis/l8072.htm"
   },
   {
