@@ -1,4 +1,10 @@
-<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Revisor de Execução Penal</title>\n<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">\n<style>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisor de Execução Penal</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
 :root,[data-theme=verde]{
   --papel:#F2F3F1;--cartao:#FFF;--tinta:#1C2B27;--tinta2:#4A5A55;--acento:#145C43;--acento-claro:#E3EFE9;
   --ambar:#8F6410;--ambar-claro:#F7EEDB;--carimbo:#9E2B25;--carimbo-claro:#F6E7E5;--linha:#D8DCD9;--side:#1C2B27;--side-hover:#2A3B35;--side-txt:#B9C7C1;
@@ -129,7 +135,9 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
 .vchip.nao{border-color:var(--carimbo);background:var(--carimbo-claro);color:var(--carimbo)}
 .vchip.meio{border-color:var(--ambar);background:var(--ambar-claro);color:var(--ambar)}
 #rel-fontes a{color:var(--acento)}
-</style>\n</head>\n<body data-theme="verde">
+</style>
+</head>
+<body data-theme="verde">
 <div class="app">
   <aside class="side">
     <div class="marca"><h1>Revisor de Execução Penal</h1><small>ferramenta local · offline · v0.2</small></div>
@@ -155,7 +163,9 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
     <section class="tela on" id="analise">
       <div class="drop" tabindex="0" id="drop"><b id="drop-t">Arraste o RSPE (PDF do SEEU) para pré-preencher</b>
         <small id="drop-s">Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.</small>
-        <span class="ou" id="btn-exemplo">preencher com o exemplo de testes (CT-01)</span></div>
+        <span class="ou" id="btn-exemplo">preencher com o exemplo de testes (CT-01)</span>
+        <span class="ou" id="btn-limpar" style="border-color:var(--carimbo);color:var(--carimbo)">reiniciar análise (limpar tudo)</span>
+        <span class="ou" id="btn-calib" style="display:none">copiar texto lido (calibração)</span></div>
 
       <div class="stepper">
         <span class="st on" data-p="1">1 · Ações Penais</span><i></i>
@@ -340,7 +350,8 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
 
     <!-- ================= 4 · PRECEDENTES ================= -->
     <section class="tela" id="prec">
-      <input class="busca" id="prec-busca" placeholder="Filtrar por tema, súmula ou dispositivo — ex.: falta grave, 1195, art. 6º">
+      <input class="busca" id="prec-busca" placeholder="Filtrar por tribunal, tema, súmula ou dispositivo">
+      <div class="card" id="prec-feed" style="display:none;margin-bottom:16px"><h3>Atualizações jurisprudenciais recentes <span style="text-transform:none;font-weight:400">· curadas na verificação mensal da base</span></h3><div id="prec-feed-itens"></div></div>
       <div class="card"><h3>Vigilância ativa · o que pode mudar esta base</h3>
         <div class="prec"><span class="quando">22/06/26</span><div><h4>Tema 1195/STJ — tese retificada <span class="selo s-div">afeta: art. 6º dos decretos</span></h4>
           <p>Janela de 12 meses olha a ocorrência da falta, salvo mora estatal. Supera o EREsp 1.549.544.</p><a href="https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195" target="_blank" rel="noopener">Tema 1195 no STJ ↗</a></div></div>
@@ -570,6 +581,27 @@ $("copiar-json").onclick=()=>{navigator.clipboard.writeText(JSON.stringify({dec:
   foto2024:DEC==="ambos"?{cumprido:[$("x-ca").value,$("x-cm").value,$("x-cd").value],remicao:$("x-rem").value,reg:$("x-reg").value,rei:$("x-rei").value}:null},null,1));
   $("copiar-json").textContent="Copiado ✓";setTimeout(()=>$("copiar-json").textContent="Copiar análise (JSON)",1500);};
 
+/* ---- limpar tudo / reiniciar ---- */
+let TEXTO_PDF="";
+function limparTudo(){
+  $("acoes").innerHTML="";seq=0;novaAcao();
+  ["w-nome","w-proc","w-falta"].forEach(i=>$(i).value="");
+  ["w-ca","w-cm","w-cd","w-rem","x-ca","x-cm","x-cd","x-rem"].forEach(i=>$(i).value="");
+  $("w-rei").value="p";$("w-reg").value="fechado";$("w-comut").value="n";
+  $("x-rei").value="p";$("x-reg").value="fechado";
+  ULTIMA=null;TEXTO_PDF="";
+  $("resultado-analise").innerHTML="";
+  $("rel-cheio").style.display="none";$("rel-vazio").style.display="block";
+  $("btn-calib").style.display="none";
+  $("drop-t").textContent=T?"Arraste o RSPE (PDF do SEEU) para pré-preencher":"Upload de PDF disponível no aplicativo instalado";
+  $("drop-s").textContent=T?"Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.":"Neste modo de visualização, preencha à mão ou use o exemplo de testes.";
+  atualizaHdr();somas();irPasso(1);}
+$("btn-limpar").onclick=e=>{e.stopPropagation();limparTudo();};
+$("btn-calib").onclick=e=>{e.stopPropagation();
+  navigator.clipboard.writeText(TEXTO_PDF||"(vazio)");
+  $("btn-calib").textContent="Copiado ✓ — cole na conversa para eu calibrar o leitor";
+  setTimeout(()=>$("btn-calib").textContent="copiar texto lido (calibração)",2500);};
+
 /* ---- exemplo de testes (opcional, explícito) ---- */
 $("btn-exemplo").onclick=e=>{e.stopPropagation();
   $("acoes").innerHTML="";seq=0;
@@ -683,10 +715,18 @@ $("prec-busca").oninput=e=>{const q=e.target.value.toLowerCase();
 
 /* ================= Tauri: base, atualização e upload ================= */
 let BASE=null;
+function renderFeed(){
+  if(!BASE||!Array.isArray(BASE.feed)||!BASE.feed.length)return;
+  $("prec-feed").style.display="block";
+  $("prec-feed-itens").innerHTML=BASE.feed.map(f=>
+    '<div class="prec"><span class="quando">'+(f.data||"")+'</span><div><h4>'+f.titulo+
+    (f.tribunal?' <span class="selo s-ok">'+f.tribunal+'</span>':'')+'</h4><p>'+(f.resumo||"")+'</p>'+
+    (f.url?'<a href="'+f.url+'" target="_blank" rel="noopener">inteiro teor / fonte ↗</a>':'')+'</div></div>').join("");}
 async function carregaBase(){if(!T)return;
   try{BASE=JSON.parse(await T.core.invoke("get_base"));
     $("selo-versao").textContent="v"+BASE.meta.versao;
     $("selo-origem").textContent="("+await T.core.invoke("get_base_info")+")";
+    renderFeed();
   }catch(e){}}
 async function checarAtualizacao(manual){if(!T)return;
   $("selo-status").textContent="verificando atualização…";
@@ -705,7 +745,7 @@ async function boot(){
   checarAtualizacao(false);
   const abrir=async()=>{const sel=await T.dialog.open({multiple:false,filters:[{name:"PDF do SEEU",extensions:["pdf"]}]});
     if(!sel)return;$("drop-t").textContent="Lendo o atestado…";
-    try{const tx=await T.core.invoke("parse_pdf",{path:sel});preencher(tx);}
+    try{const tx=await T.core.invoke("parse_pdf",{path:sel});limparTudo();TEXTO_PDF=tx;preencher(tx);}
     catch(err){$("drop-t").textContent="Falha na leitura";$("drop-s").textContent=String(err);}};
   $("drop").onclick=abrir;
   $("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")abrir();};}
@@ -722,8 +762,14 @@ function preencher(t){
   const reg=pega(/Regime\\s+Atual[:\\s]*([A-Za-zçÇ]+)/i);
   if(reg){const r=reg[1].toLowerCase();$("w-reg").value=r.startsWith("fech")?"fechado":r.startsWith("semi")?"semiaberto":r.startsWith("aber")?"aberto":r.startsWith("livr")?"lc":$("w-reg").value;n++;}
   atualizaHdr();
-  $("drop-t").textContent="Atestado lido — "+n+" campo(s) pré-preenchido(s)";
-  $("drop-s").textContent="Ações penais e pena cumprida por marco são cadastradas manualmente nesta versão. Confira tudo antes de analisar.";}
+  if(n===0){
+    $("drop-t").textContent="PDF lido, mas não reconheci este layout de atestado";
+    $("drop-s").textContent="Preencha à mão normalmente — e, se quiser me ajudar a calibrar o leitor para este modelo, use o botão abaixo e cole o texto na conversa com o Claude.";
+  }else{
+    $("drop-t").textContent="Atestado lido — "+n+" campo(s) pré-preenchido(s)";
+    $("drop-s").textContent="Ações penais e pena cumprida por marco são cadastradas manualmente nesta versão. Confira tudo antes de analisar.";
+  }
+  $("btn-calib").style.display="inline-block";}
 /* ================= inicialização ================= */
 document.addEventListener("click",function(e){var a=e.target.closest("a[target=_blank]");
   if(a&&T&&T.opener){e.preventDefault();T.opener.openUrl(a.href);}});
