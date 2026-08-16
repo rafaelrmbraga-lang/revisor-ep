@@ -13,7 +13,7 @@ const BASE_EMBUTIDA: &str = include_str!("../base.json");
 
 /// Manifesto da base no GitHub (preencher OWNER/REPO na publicação — ver ATUALIZACAO.md).
 const MANIFEST_URL: &str =
-    "https://github.com/OWNER/revisor-ep/releases/latest/download/manifest.json";
+    "https://github.com/rafaelrmbraga-lang/revisor-ep/releases/latest/download/manifest.json";
 
 fn dir_dados(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     let d = app.path().app_data_dir().map_err(|e| e.to_string())?;
