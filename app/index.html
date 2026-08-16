@@ -1,0 +1,701 @@
+<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Revisor de Execução Penal</title>\n<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">\n<style>
+:root,[data-theme=verde]{
+  --papel:#F2F3F1;--cartao:#FFF;--tinta:#1C2B27;--tinta2:#4A5A55;--acento:#145C43;--acento-claro:#E3EFE9;
+  --ambar:#8F6410;--ambar-claro:#F7EEDB;--carimbo:#9E2B25;--carimbo-claro:#F6E7E5;--linha:#D8DCD9;--side:#1C2B27;--side-hover:#2A3B35;--side-txt:#B9C7C1;
+}
+[data-theme=grafite]{--papel:#EFEFF1;--cartao:#FFF;--tinta:#232326;--tinta2:#5A5A60;--acento:#3D3D8F;--acento-claro:#E7E7F5;--ambar:#8F6410;--ambar-claro:#F5EEDC;--carimbo:#9E2B25;--carimbo-claro:#F6E7E5;--linha:#D9D9DD;--side:#232326;--side-hover:#333338;--side-txt:#BEBEC6}
+[data-theme=sepia]{--papel:#F4EFE6;--cartao:#FDFBF6;--tinta:#3A2E22;--tinta2:#6E5F4D;--acento:#7A4A21;--acento-claro:#F0E4D4;--ambar:#8F6410;--ambar-claro:#F5EAD2;--carimbo:#8E2F22;--carimbo-claro:#F4E4DF;--linha:#E0D6C6;--side:#3A2E22;--side-hover:#4C3D2E;--side-txt:#CBBBA5}
+[data-theme=petroleo]{--papel:#EFF3F4;--cartao:#FFF;--tinta:#12333B;--tinta2:#48626A;--acento:#0E5A6B;--acento-claro:#E0EEF1;--ambar:#8F6410;--ambar-claro:#F7EEDB;--carimbo:#9E2B25;--carimbo-claro:#F6E7E5;--linha:#D5DEE0;--side:#12333B;--side-hover:#1C4650;--side-txt:#AECBD2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--papel);color:var(--tinta);font-size:14px;line-height:1.5}
+.app{display:grid;grid-template-columns:216px 1fr;min-height:100vh}
+.side{background:var(--side);color:#DDE5E1;display:flex;flex-direction:column;padding:20px 0}
+.marca{padding:0 20px 18px;border-bottom:1px solid rgba(255,255,255,.14)}
+.marca h1{font-family:'Archivo';font-weight:700;font-size:15px;color:#fff}
+.marca small{display:block;color:var(--side-txt);font-size:11px;margin-top:2px}
+nav{flex:1;padding:14px 10px}
+nav button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;color:var(--side-txt);font:inherit;font-weight:500;padding:9px 12px;border-radius:7px;cursor:pointer}
+nav button:hover{background:var(--side-hover);color:#fff}
+nav button.on{background:var(--acento);color:#fff}
+nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+nav .k{font-family:'IBM Plex Mono';font-size:11px;opacity:.55;margin-left:auto}
+.tema{margin:0 14px 12px;font-size:11.5px;color:var(--side-txt)}
+.tema label{display:block;margin-bottom:5px;font-family:'Archivo';font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:10px}
+.tema select{width:100%;font:inherit;font-size:12px;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:var(--side-hover);color:#fff}
+.base-selo{margin:0 14px;padding:11px 12px;border:1px solid rgba(255,255,255,.18);border-radius:8px;font-size:11.5px;color:var(--side-txt)}
+.base-selo b{color:#fff;font-family:'IBM Plex Mono';font-weight:500}
+.area{padding:26px 34px;max-width:1180px}
+.topo{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px}
+.topo h2{font-family:'Archivo';font-weight:700;font-size:21px}
+.topo .assistido{font-family:'IBM Plex Mono';font-size:12.5px;color:var(--tinta2)}
+.tela{display:none}.tela.on{display:block}
+.grid2{display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:start}
+.card{background:var(--cartao);border:1px solid var(--linha);border-radius:10px;padding:18px}
+.card h3{font-family:'Archivo';font-weight:600;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--tinta2);margin-bottom:12px}
+.selo{display:inline-block;font-family:'IBM Plex Mono';font-size:10.5px;font-weight:500;padding:2px 8px;border-radius:4px}
+.s-ok{background:var(--acento-claro);color:var(--acento)}.s-conf{background:var(--ambar-claro);color:var(--ambar)}.s-div{background:var(--carimbo-claro);color:var(--carimbo)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:'Archivo';font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta2);text-align:left;padding:7px 8px;border-bottom:1.5px solid var(--tinta)}
+td{padding:8px;border-bottom:1px solid var(--linha);vertical-align:top}
+.mono,td.mono{font-family:'IBM Plex Mono';font-size:12.5px}
+td .pg{color:var(--tinta2);font-size:11px;font-family:'IBM Plex Mono'}
+input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
+.aviso{display:flex;gap:10px;align-items:center;background:var(--ambar-claro);border:1px solid #E4CE9B;border-radius:8px;padding:10px 14px;font-size:13px;color:#5C430E;margin-bottom:16px}
+.aviso b{font-family:'Archivo'}
+.drop{border:2px dashed var(--acento);background:var(--acento-claro);border-radius:12px;padding:26px;text-align:center;margin-bottom:16px;cursor:pointer}
+.drop b{font-family:'Archivo';font-size:15px;color:var(--acento)}
+.drop small{display:block;margin-top:5px;font-size:12px;color:var(--tinta2)}
+.drop .ou{font-family:'IBM Plex Mono';font-size:11px;margin-top:8px;display:inline-block;border:1.5px solid var(--acento);color:var(--acento);border-radius:6px;padding:5px 12px}
+.timeline{position:relative;margin:26px 4px 10px;height:78px}
+.timeline .trilho{position:absolute;top:38px;left:0;right:0;height:2px;background:var(--tinta)}
+.tl{position:absolute;top:0;transform:translateX(-50%);text-align:center;width:86px}
+.tl .p{width:11px;height:11px;border-radius:50%;background:var(--acento);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--acento);margin:33px auto 0}
+.tl.fuga .p{background:#fff;box-shadow:0 0 0 1.5px var(--carimbo)}
+.tl.marco .p{border-radius:2px;background:var(--ambar);box-shadow:0 0 0 1.5px var(--ambar)}
+.tl .d{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--tinta2);position:absolute;top:52px;width:100%}
+.tl .r{font-size:10.5px;font-weight:600;position:absolute;top:0;width:100%}
+.tl.fuga .r{color:var(--carimbo)}.tl.marco .r{color:var(--ambar)}
+.faixa{position:absolute;top:35px;height:8px;background:repeating-linear-gradient(45deg,var(--carimbo-claro),var(--carimbo-claro) 4px,#fff 4px,#fff 8px);border:1px solid var(--carimbo);border-radius:3px}
+.achado{border-left:3px solid var(--carimbo);background:var(--carimbo-claro);border-radius:0 8px 8px 0;padding:11px 13px;margin-bottom:10px}
+.achado.conf{border-color:var(--ambar);background:var(--ambar-claro)}
+.achado h4{font-family:'Archivo';font-size:12.5px;font-weight:600;display:flex;gap:8px;align-items:center}
+.achado p{font-size:12.5px;color:var(--tinta2);margin-top:4px}
+.achado .fund{font-family:'IBM Plex Mono';font-size:11px;margin-top:6px;display:block}
+/* Calculadora: abas LATERAIS */
+.calc-wrap{display:grid;grid-template-columns:178px 1fr;gap:18px;align-items:start}
+.calc-nav{background:var(--cartao);border:1px solid var(--linha);border-radius:10px;padding:8px;position:sticky;top:20px}
+.calc-nav span{display:block;font-family:'Archivo';font-weight:600;font-size:12.5px;padding:9px 12px;color:var(--tinta2);cursor:pointer;border-radius:7px;border-left:3px solid transparent}
+.calc-nav span:hover{background:var(--papel)}
+.calc-nav span.on{background:var(--acento-claro);color:var(--acento);border-left-color:var(--acento)}
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 16px;margin-bottom:16px}
+.campo label{display:block;font-family:'Archivo';font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--tinta2);margin-bottom:4px}
+.campo input,.campo select{width:100%;font:inherit;padding:8px 10px;border:1.5px solid var(--linha);border-radius:7px;background:var(--cartao)}
+.campo input:focus,.campo select:focus{outline:2px solid var(--acento);border-color:var(--acento)}
+.pena3{display:flex;gap:6px}.pena3 input{text-align:center;font-family:'IBM Plex Mono'}
+.btn{font-family:'Archivo';font-weight:600;font-size:13px;border:1.5px solid var(--tinta);background:var(--tinta);color:#fff;padding:9px 18px;border-radius:7px;cursor:pointer}
+.btn.claro{background:var(--cartao);color:var(--tinta)}
+.btn:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.resultado{margin-top:16px;border:1.5px solid var(--acento);border-radius:10px;padding:16px;background:var(--acento-claro);display:none}
+.resultado.on{display:block}
+.resultado .data{font-family:'IBM Plex Mono';font-size:26px;font-weight:500;color:var(--acento)}
+.resultado .mem{font-size:12.5px;color:var(--tinta2);margin-top:8px}
+.resultado .mem div{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--linha)}
+.ficha{font-family:'IBM Plex Mono';font-size:12.5px;background:var(--papel);border:1px solid var(--linha);border-radius:8px;padding:16px;white-space:pre-wrap;line-height:1.75}
+.prec{display:flex;gap:12px;padding:13px 4px;border-bottom:1px solid var(--linha)}
+.prec .quando{font-family:'IBM Plex Mono';font-size:11px;color:var(--tinta2);width:78px;flex-shrink:0;padding-top:2px}
+.prec h4{font-size:13.5px;font-weight:600}.prec p{font-size:12.5px;color:var(--tinta2);margin-top:3px}
+.prec a{color:var(--acento);font-size:12px;font-family:'IBM Plex Mono'}
+.busca{width:100%;font:inherit;padding:9px 12px;border:1.5px solid var(--linha);border-radius:8px;margin-bottom:14px}
+@media (max-width:900px){.grid2,.form,.calc-wrap{grid-template-columns:1fr}.app{grid-template-columns:1fr}}
+
+/* ===== Wizard ===== */
+.stepper{display:flex;align-items:center;gap:10px;margin:4px 0 18px}
+.stepper i{flex:1;height:2px;background:var(--linha)}
+.st{font-family:'Archivo';font-weight:600;font-size:12.5px;padding:8px 14px;border:1.5px solid var(--linha);border-radius:999px;color:var(--tinta2);background:var(--cartao);cursor:default}
+.st.on{border-color:var(--acento);background:var(--acento-claro);color:var(--acento)}
+.st.feito{border-color:var(--acento);color:var(--acento)}
+.passo{display:none}.passo.on{display:block}
+.tog2{display:flex;gap:8px;flex-wrap:wrap}
+.tg{font:inherit;font-family:'Archivo';font-weight:600;font-size:12.5px;padding:9px 14px;border-radius:8px;border:1.5px solid var(--linha);background:var(--cartao);color:var(--tinta2);cursor:pointer}
+.tg.on{border-color:var(--acento);background:var(--acento);color:#fff}
+.nota{font-size:12px;color:var(--tinta2);margin-top:10px}
+.acao{border:1.5px solid var(--linha);border-radius:10px;padding:14px;margin-bottom:12px;background:var(--papel)}
+.acao .cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.acao .cab b{font-family:'Archivo';font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta2)}
+.acao .rm{background:none;border:0;color:var(--carimbo);font-size:12px;cursor:pointer;font-family:'IBM Plex Mono'}
+.rodape-passo{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.somas{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.soma{border:1px solid var(--linha);border-radius:8px;padding:10px 12px;background:var(--cartao)}
+.soma small{display:block;font-family:'Archivo';font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta2)}
+.soma b{font-family:'IBM Plex Mono';font-weight:500;font-size:14px}
+.soma.destaque{border-color:var(--acento);background:var(--acento-claro)}
+.veredito{border-radius:10px;padding:16px 18px;margin-bottom:14px;border:1.5px solid}
+.veredito.sim{border-color:var(--acento);background:var(--acento-claro)}
+.veredito.nao{border-color:var(--carimbo);background:var(--carimbo-claro)}
+.veredito.meio{border-color:var(--ambar);background:var(--ambar-claro)}
+.veredito h4{font-family:'Archivo';font-size:16px;font-weight:700}
+.veredito .mem{margin-top:10px;font-size:12.5px}
+.veredito .mem div{display:flex;justify-content:space-between;gap:16px;padding:4px 0;border-bottom:1px dashed rgba(0,0,0,.12)}
+@media(max-width:900px){.somas{grid-template-columns:1fr 1fr}}
+
+
+.fitem{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;border-bottom:1px dashed var(--linha);font-size:13px}
+.fitem .n{font-family:'IBM Plex Mono';font-size:11px;color:var(--tinta2);width:18px;flex-shrink:0;padding-top:2px}
+.fitem .q{flex:1}
+.fitem .q small{display:block;color:var(--tinta2);font-size:11.5px;margin-top:2px}
+.fid{font-family:'IBM Plex Mono';font-size:12.5px;background:var(--papel);border:1px solid var(--linha);border-radius:8px;padding:10px 12px;margin-bottom:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.vchip{display:inline-flex;gap:8px;align-items:center;border:1.5px solid;border-radius:8px;padding:7px 11px;font-size:12.5px;margin:4px 6px 0 0;font-family:'Archivo';font-weight:600}
+.vchip.sim{border-color:var(--acento);background:var(--acento-claro);color:var(--acento)}
+.vchip.nao{border-color:var(--carimbo);background:var(--carimbo-claro);color:var(--carimbo)}
+.vchip.meio{border-color:var(--ambar);background:var(--ambar-claro);color:var(--ambar)}
+#rel-fontes a{color:var(--acento)}
+</style>\n</head>\n<body data-theme="verde">
+<div class="app">
+  <aside class="side">
+    <div class="marca"><h1>Revisor de Execução Penal</h1><small>ferramenta local · offline · v0.2</small></div>
+    <nav>
+      <button class="on" data-t="analise">Análise <span class="k">1</span></button>
+      <button data-t="calc">Calculadora <span class="k">2</span></button>
+      <button data-t="rel">Relatório <span class="k">3</span></button>
+      <button data-t="prec">Precedentes <span class="k">4</span></button>
+    </nav>
+    <div class="tema"><label>Aparência</label>
+      <select id="tema"><option value="verde">Verde-tinta (padrão)</option><option value="grafite">Grafite</option><option value="sepia">Sépia · papel</option><option value="petroleo">Azul-petróleo</option></select>
+    </div>
+    <div class="base-selo">Base de regras<br><b id="selo-versao">v2026.08.2</b> <span id="selo-origem" style="font-size:10px"></span><br>
+      <span id="selo-status" style="font-size:10.5px">2 itens em vigilância</span><br>
+      <button id="selo-check" type="button" style="margin-top:6px;font:600 10.5px Archivo;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:none;color:inherit;cursor:pointer">verificar atualização</button></div>
+  </aside>
+
+  <main class="area">
+    <div class="topo"><h2 id="titulo">Análise estruturada — indulto e comutação</h2>
+      <span class="assistido" id="hdr">Nenhum assistido carregado</span></div>
+
+    <!-- ================= 1 · ANÁLISE ================= -->
+    <section class="tela on" id="analise">
+      <div class="drop" tabindex="0" id="drop"><b id="drop-t">Arraste o RSPE (PDF do SEEU) para pré-preencher</b>
+        <small id="drop-s">Leitura 100% local — nada é salvo nem transmitido. Ou preencha à mão abaixo.</small>
+        <span class="ou" id="btn-exemplo">preencher com o exemplo de testes (CT-01)</span></div>
+
+      <div class="stepper">
+        <span class="st on" data-p="1">1 · Ações Penais</span><i></i>
+        <span class="st" data-p="2">2 · Pena cumprida · regime</span><i></i>
+        <span class="st" data-p="3">3 · Análise jurídica</span>
+      </div>
+
+      <div class="passo on" id="p1">
+        <div class="card">
+          <h3>Decreto de referência</h3>
+          <div class="tog2">
+            <button class="tg on" data-dec="d12790_2025">Decreto 12.790/2025 · marco 25/12/2025</button>
+            <button class="tg" data-dec="d12338_2024">Decreto 12.338/2024 · marco 25/12/2024</button>
+            <button class="tg" data-dec="ambos">Analisar os dois — lado a lado</button>
+          </div>
+          <p class="nota" id="nota-marco">Todos os cálculos (frações, tetos, pedágio, janela de falta grave) usam o marco <b class="mono">25/12/2025</b>.</p>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3>Identificação</h3>
+          <div class="form">
+            <div class="campo"><label>Nome do reeducando</label><input id="w-nome" placeholder="Nome completo"></div>
+            <div class="campo"><label>Nº do processo de execução</label><input id="w-proc" placeholder="0000000-00.0000.0.00.0000"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3>Ações penais <span style="text-transform:none;font-weight:400">· a capitulação e a violência determinam o regime de análise</span></h3>
+          <div id="acoes"></div>
+          <button class="btn claro" id="add-acao" type="button">+ Adicionar ação penal</button>
+        </div>
+        <div class="rodape-passo"><span></span><button class="btn" data-vai="2" type="button">Avançar para pena cumprida →</button></div>
+      </div>
+
+      <div class="passo" id="p2">
+        <div class="card"><h3>Somas automáticas <span style="text-transform:none;font-weight:400">· conforme as ações do passo 1</span></h3>
+          <div class="somas" id="somas"></div></div>
+        <div class="card" style="margin-top:16px">
+          <h3>Pena cumprida e situação no marco <b class="mono" id="lbl-marco">25/12/2025</b></h3>
+          <div class="form">
+            <div class="campo"><label>Pena cumprida até o marco (a·m·d) — com detração</label>
+              <div class="pena3"><input id="w-ca" type="number" min="0" placeholder="anos"><input id="w-cm" type="number" min="0" placeholder="meses"><input id="w-cd" type="number" min="0" placeholder="dias"></div></div>
+            <div class="campo"><label>Remição homologada até o marco (dias)</label><input id="w-rem" type="number" min="0" placeholder="0"></div>
+            <div class="campo"><label>Condição do réu no marco (art. 14)</label>
+              <select id="w-rei"><option value="p">Primário</option><option value="r">Reincidente</option></select></div>
+            <div class="campo"><label>Regime / situação no marco</label>
+              <select id="w-reg"><option value="fechado">Fechado</option><option value="semiaberto">Semiaberto</option><option value="aberto">Aberto</option><option value="lc">Livramento condicional</option><option value="prd">PRD / sursis</option></select></div>
+            <div class="campo"><label>Falta grave: data do FATO da última (vazio = nenhuma)</label><input id="w-falta" type="date"></div>
+            <div class="campo"><label>Já houve comutação em decreto anterior?</label>
+              <select id="w-comut"><option value="n">Não</option><option value="s">Sim (art. 13, §2º)</option></select></div>
+          </div>
+          <div id="bloco-2024" style="display:none;border:1.5px dashed var(--ambar);border-radius:9px;padding:12px;margin:6px 0 12px;background:var(--ambar-claro)">
+            <p style="font-family:Archivo;font-weight:600;font-size:12px;margin-bottom:8px">Fotografia em 25/12/2024 (Decreto 12.338) — a situação era outra:</p>
+            <div class="form" style="margin-bottom:0">
+              <div class="campo"><label>Pena cumprida até 25/12/2024 (a·m·d)</label>
+                <div class="pena3"><input id="x-ca" type="number" min="0" placeholder="anos"><input id="x-cm" type="number" min="0" placeholder="meses"><input id="x-cd" type="number" min="0" placeholder="dias"></div></div>
+              <div class="campo"><label>Remição até 25/12/2024 (dias)</label><input id="x-rem" type="number" min="0" placeholder="0"></div>
+              <div class="campo"><label>Regime em 25/12/2024</label>
+                <select id="x-reg"><option value="fechado">Fechado</option><option value="semiaberto">Semiaberto</option><option value="aberto">Aberto</option><option value="lc">Livramento condicional</option><option value="prd">PRD / sursis</option></select></div>
+              <div class="campo"><label>Condição do réu em 25/12/2024</label>
+                <select id="x-rei"><option value="p">Primário</option><option value="r">Reincidente</option></select></div>
+            </div>
+          </div>
+          <div class="linhas" style="max-width:440px"><div><span>Pena remanescente no marco selecionado</span><span class="mono" id="w-reman">—</span></div></div>
+        </div>
+        <div class="rodape-passo"><button class="btn claro" data-vai="1" type="button">← Voltar</button><button class="btn" id="rodar" type="button">Executar análise jurídica</button></div>
+      </div>
+
+      <div class="passo" id="p3">
+        <div id="resultado-analise"></div>
+        <div class="rodape-passo"><button class="btn claro" data-vai="2" type="button">← Ajustar dados</button>
+          <span><button class="btn claro" id="copiar-json" type="button">Copiar análise (JSON)</button>
+          <button class="btn" id="ir-rel" type="button">Abrir ficha no Relatório →</button></span></div>
+      </div>
+    </section>
+
+    <!-- ================= 2 · CALCULADORA ================= -->
+    <section class="tela" id="calc">
+      <div class="calc-wrap">
+        <div class="calc-nav" id="calc-nav">
+          <span class="on" data-c="prog">Progressão</span><span data-c="presc">Prescrição</span><span data-c="livr">Livramento</span><span data-c="indcom">Indulto · Comutação</span><span data-c="remdet">Remição · Detração</span><span data-c="unif">Unificação</span>
+        </div>
+        <div>
+          <!-- Progressão -->
+          <div class="card cmod on" id="cm-prog"><h3>Progressão de regime</h3>
+            <div class="form">
+              <div class="campo"><label>Data do fato</label><input type="date" id="pg-fato"></div>
+              <div class="campo"><label>Data-base (início ou última interrupção)</label><input type="date" id="pg-base"></div>
+              <div class="campo"><label>Pena a considerar (a·m·d)</label><div class="pena3"><input id="pg-a" type="number" min="0" placeholder="anos"><input id="pg-m" type="number" min="0" placeholder="meses"><input id="pg-d" type="number" min="0" placeholder="dias"></div></div>
+              <div class="campo"><label>Reincidência</label><select id="pg-rei"><option value="p">Primário</option><option value="r">Reincidente</option></select></div>
+              <div class="campo"><label>Natureza</label><select id="pg-nat"><option value="sv">Sem violência ou grave ameaça</option><option value="cv">Com violência ou grave ameaça</option><option value="h">Hediondo / equiparado</option><option value="hm">Hediondo com resultado morte</option></select></div>
+              <div class="campo"><label>Remição homologada (dias)</label><input id="pg-rem" type="number" min="0" placeholder="0"></div>
+            </div>
+            <button class="btn" id="pg-go" type="button">Calcular</button>
+            <div class="resultado" id="pg-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="pg-data">—</div><div class="mem" id="pg-mem"></div></div>
+            <p class="nota">Fração escolhida pela era da data do fato, aplicando-se a mais favorável entre as leis sucessivas (STJ, Tema 1354). Contagem civil exata.</p>
+          </div>
+          <!-- Prescrição -->
+          <div class="card cmod" id="cm-presc"><h3>Prescrição da pretensão executória</h3>
+            <div class="form">
+              <div class="campo"><label>Pena (restante, se evasão/revogação — art. 113)</label><div class="pena3"><input id="ps-a" type="number" min="0" placeholder="anos"><input id="ps-m" type="number" min="0" placeholder="meses"><input id="ps-d" type="number" min="0" placeholder="dias"></div></div>
+              <div class="campo"><label>Termo inicial (trânsito p/ acusação, fuga, revogação…)</label><input type="date" id="ps-ini"></div>
+              <div class="campo"><label>Reincidente? (+1/3 — art. 110)</label><select id="ps-rei"><option value="n">Não</option><option value="s">Sim</option></select></div>
+              <div class="campo"><label>Menor de 21 no fato ou maior de 70 na sentença? (art. 115: metade)</label><select id="ps-115"><option value="n">Não</option><option value="s">Sim</option></select></div>
+              <div class="campo"><label>Fato anterior a 06/05/2010? (pena &lt; 1 ano: prazo de 2 anos)</label><select id="ps-2010"><option value="n">Não</option><option value="s">Sim</option></select></div>
+            </div>
+            <button class="btn" id="ps-go" type="button">Calcular</button>
+            <div class="resultado" id="ps-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="ps-data">—</div><div class="mem" id="ps-mem"></div></div>
+            <p class="nota">Tabela do art. 109 do CP; +1/3 do art. 110 só na executória; art. 115 aplicado após o acréscimo (ordem doutrinária — sem precedente qualificado, conferir). Causas impeditivas/interruptivas (arts. 116-117) não são presumidas: ajuste o termo inicial.</p>
+          </div>
+          <!-- Livramento -->
+          <div class="card cmod" id="cm-livr"><h3>Livramento condicional</h3>
+            <div class="form">
+              <div class="campo"><label>Pena total (a·m·d)</label><div class="pena3"><input id="lv-a" type="number" min="0" placeholder="anos"><input id="lv-m" type="number" min="0" placeholder="meses"><input id="lv-d" type="number" min="0" placeholder="dias"></div></div>
+              <div class="campo"><label>Data-base (início do cumprimento)</label><input type="date" id="lv-base"></div>
+              <div class="campo"><label>Situação</label><select id="lv-sit"><option value="np">Comum · não reincidente em doloso</option><option value="r">Comum · reincidente em doloso</option><option value="h">Hediondo · não reincidente específico</option><option value="hre">Hediondo · reincidente específico (vedado)</option></select></div>
+              <div class="campo"><label>Data do fato (define se a alínea b se aplica)</label><input type="date" id="lv-fato"></div>
+              <div class="campo"><label>Data do FATO da última falta grave (vazio = nenhuma)</label><input type="date" id="lv-falta"></div>
+              <div class="campo"><label>Remição homologada (dias)</label><input id="lv-rem" type="number" min="0" placeholder="0"></div>
+            </div>
+            <button class="btn" id="lv-go" type="button">Calcular</button>
+            <div class="resultado" id="lv-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="lv-data">—</div><div class="mem" id="lv-mem"></div></div>
+            <p class="nota">Frações do art. 83 do CP são "mais de" (estritamente maior). A falta grave não interrompe o prazo (Súm. 441), mas — para fatos a partir de 23/01/2020 — impede por 12 meses da ocorrência (alínea b). Requisito subjetivo: histórico integral (Tema 1161).</p>
+          </div>
+          <!-- Indulto/Comutação -->
+          <div class="card cmod" id="cm-indcom"><h3>Indulto · Comutação</h3>
+            <p style="font-size:13.5px;max-width:560px">Esta análise depende do conjunto completo (ações penais por natureza, pedágio, janela de falta grave, fotografia em cada marco). Por isso ela vive no assistente estruturado de 3 passos.</p>
+            <button class="btn" id="ir-analise" style="margin-top:12px" type="button">Abrir o assistente de análise →</button>
+          </div>
+          <!-- Remição/Detração -->
+          <div class="card cmod" id="cm-remdet"><h3>Remição e detração</h3>
+            <div class="form">
+              <div class="campo"><label>Dias trabalhados (3 dias = 1 remido)</label><input id="rd-trab" type="number" min="0" placeholder="0"></div>
+              <div class="campo"><label>Horas de estudo (12 h = 1 remido)</label><input id="rd-est" type="number" min="0" placeholder="0"></div>
+              <div class="campo"><label>Concluiu ensino fund./médio/superior? (+1/3 sobre o estudo)</label><select id="rd-conc"><option value="n">Não</option><option value="s">Sim</option></select></div>
+              <div class="campo"><label>Detração: início da prisão provisória</label><input type="date" id="rd-i"></div>
+              <div class="campo"><label>Detração: fim do período</label><input type="date" id="rd-f"></div>
+            </div>
+            <button class="btn" id="rd-go" type="button">Calcular</button>
+            <div class="resultado" id="rd-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="rd-data">—</div><div class="mem" id="rd-mem"></div></div>
+            <p class="nota">Art. 126 da LEP. O resultado é o que você levará ao juízo para HOMOLOGAÇÃO — o revisor nunca presume remição não homologada nos demais módulos.</p>
+          </div>
+          <!-- Unificação -->
+          <div class="card cmod" id="cm-unif"><h3>Unificação / soma de penas</h3>
+            <div id="un-lista"></div>
+            <button class="btn claro" id="un-add" type="button">+ Adicionar pena</button>
+            <div class="form" style="margin-top:12px">
+              <div class="campo"><label>Data-base do cumprimento</label><input type="date" id="un-base"></div>
+              <div class="campo"><label>Abatimentos já reconhecidos (detração + remição, em dias)</label><input id="un-abat" type="number" min="0" placeholder="0"></div>
+            </div>
+            <button class="btn" id="un-go" type="button">Somar</button>
+            <div class="resultado" id="un-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="un-data">—</div><div class="mem" id="un-mem"></div></div>
+            <p class="nota">Art. 111 da LEP: o regime se determina pela soma, observadas detração e remição. Sobrevindo condenação, soma-se ao restante (p. único).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3 · RELATÓRIO ================= -->
+    <section class="tela" id="rel">
+      <div id="rel-vazio" class="card"><h3>Relatório</h3>
+        <p style="font-size:13.5px">Nenhuma análise executada ainda. Preencha o assistente na aba <b>Análise</b> e clique em "Executar análise jurídica" — a ficha de triagem aparecerá aqui, pronta para copiar.</p></div>
+      <div id="rel-cheio" style="display:none" class="grid2">
+        <div class="card"><h3 id="rel-titulo">Ficha de triagem</h3>
+          <div class="ficha" id="rel-ficha"></div>
+          <div style="display:flex;gap:10px;margin-top:14px"><button class="btn" id="rel-copiar" type="button">Copiar ficha</button></div>
+        </div>
+        <div class="card"><h3>Fundamentos citados</h3><table id="rel-fontes"></table>
+          <p style="font-size:11.5px;color:var(--tinta2);margin-top:12px">Todo número sai marcado <span class="selo s-conf">[CONFERIR CÁLCULO]</span> — a assinatura é sua, a conferência também.</p></div>
+      </div>
+    </section>
+
+    <!-- ================= 4 · PRECEDENTES ================= -->
+    <section class="tela" id="prec">
+      <input class="busca" id="prec-busca" placeholder="Filtrar por tema, súmula ou dispositivo — ex.: falta grave, 1195, art. 6º">
+      <div class="card"><h3>Vigilância ativa · o que pode mudar esta base</h3>
+        <div class="prec"><span class="quando">22/06/26</span><div><h4>Tema 1195/STJ — tese retificada <span class="selo s-div">afeta: art. 6º dos decretos</span></h4>
+          <p>Janela de 12 meses olha a ocorrência da falta, salvo mora estatal. Supera o EREsp 1.549.544.</p><a href="https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195" target="_blank" rel="noopener">Tema 1195 no STJ ↗</a></div></div>
+        <div class="prec"><span class="quando">sobrest.</span><div><h4>Tema 1319/STF — pendente <span class="selo s-conf">afeta: frações retroativas</span></h4>
+          <p>Pode redesenhar a retroatividade das frações (Temas 1084/1196). Aplica-se a tese do STJ com nota.</p><a href="https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1319" target="_blank" rel="noopener">Tema 1319 no STF ↗</a> · <a href="https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1196&cod_tema_final=1196" target="_blank" rel="noopener">Tema 1196 no STJ ↗</a></div></div>
+        <div class="prec"><span class="quando">ADIs</span><div><h4>ADIs 7966/7967 — Lei 15.402/2026 <span class="selo s-conf">afeta: era 3b da progressão</span></h4>
+          <p>Suspensão monocrática noticiada (atos de 8/1). Cálculos da era 3b saem com nota de litispendência.</p><a href="https://portal.stf.jus.br/processos/listarProcessos.asp?classe=ADI&numeroProcesso=7966" target="_blank" rel="noopener">ADI 7966 ↗</a> · <a href="https://portal.stf.jus.br/processos/listarProcessos.asp?classe=ADI&numeroProcesso=7967" target="_blank" rel="noopener">ADI 7967 ↗</a> · <a href="https://www.legjur.com/legislacao/art/lei_00072101984-112" target="_blank" rel="noopener">art. 112 anotado ↗</a></div></div>
+        <div class="prec"><span class="quando">dez/26</span><div><h4>Decreto de indulto 2026 <span class="selo s-ok">aguardando</span></h4>
+          <p>Ao ser publicado, entra pela atualização da base — o aplicativo avisa; o schema já o comporta.</p><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/d12790.htm" target="_blank" rel="noopener">Decreto 12.790/2025 ↗</a> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12338.htm" target="_blank" rel="noopener">Decreto 12.338/2024 ↗</a></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+/* ================= util ================= */
+const $ = id => document.getElementById(id);
+const N = v => +v || 0;
+const D = s => new Date(s + "T12:00");
+const hoje = () => new Date();
+function penaDias(a, m, d){const r=new Date(2000,0,1),f=new Date(2000,0,1);
+  f.setFullYear(f.getFullYear()+N(a));f.setMonth(f.getMonth()+N(m));f.setDate(f.getDate()+N(d));
+  return Math.round((f-r)/864e5);}
+function addDias(dt,n){const x=new Date(dt);x.setDate(x.getDate()+n);return x;}
+function addAMD(dt,a,m,d){const x=new Date(dt);x.setFullYear(x.getFullYear()+N(a));x.setMonth(x.getMonth()+N(m));x.setDate(x.getDate()+N(d));return x;}
+function fmtDias(n){n=Math.max(Math.round(n),0);const a=Math.floor(n/365),m=Math.floor((n%365)/30),d=(n%365)%30;return a+"a "+m+"m "+d+"d";}
+function fmtData(dt){return dt.toLocaleDateString("pt-BR");}
+function memHTML(mem){return mem.map(p=>'<div><span>'+p[0]+'</span><span class="mono">'+p[1]+'</span></div>').join("");}
+function mostraRes(pfx,principal,mem){$(pfx+"-data").textContent=principal;$(pfx+"-mem").innerHTML=memHTML(mem);$(pfx+"-res").classList.add("on");}
+
+/* ================= navegação geral ================= */
+const titulos={analise:"Análise estruturada — indulto e comutação",calc:"Calculadora",rel:"Relatório e teses",prec:"Precedentes e vigilância"};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll(".tela").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");$(b.dataset.t).classList.add("on");$("titulo").textContent=titulos[b.dataset.t];});
+document.addEventListener("keydown",e=>{const m={"1":0,"2":1,"3":2,"4":3};
+  if(e.key in m && !e.target.matches("input,select,textarea"))document.querySelectorAll("nav button")[m[e.key]].click();});
+$("tema").onchange=e=>document.body.dataset.theme=e.target.value;
+document.querySelectorAll("#calc-nav span").forEach(s=>s.onclick=()=>{
+  document.querySelectorAll("#calc-nav span").forEach(x=>x.classList.remove("on"));s.classList.add("on");
+  document.querySelectorAll(".cmod").forEach(c=>c.classList.remove("on"));$("cm-"+s.dataset.c).classList.add("on");});
+document.querySelectorAll(".cmod").forEach(c=>{if(!c.classList.contains("on"))c.style.display="none";});
+const _showMod=new MutationObserver(()=>{});
+document.querySelectorAll("#calc-nav span").forEach(s=>s.addEventListener("click",()=>{
+  document.querySelectorAll(".cmod").forEach(c=>c.style.display=c.classList.contains("on")?"block":"none");}));
+$("ir-analise").onclick=()=>document.querySelector('nav button[data-t="analise"]').click();
+function atualizaHdr(){const n=$("w-nome").value.trim(),p=$("w-proc").value.trim();
+  $("hdr").textContent=(n||p)?((n||"(sem nome)")+(p?" · EP "+p:"")):"Nenhum assistido carregado";}
+$("w-nome").oninput=atualizaHdr;$("w-proc").oninput=atualizaHdr;
+
+/* ================= wizard: estado e passos ================= */
+let DEC="d12790_2025";
+const MARCO={d12790_2025:"2025-12-25",d12338_2024:"2024-12-25"};
+const PUB={d12790_2025:"2025-12-23",d12338_2024:"2024-12-23"};
+const NOME={d12790_2025:"Decreto 12.790/2025",d12338_2024:"Decreto 12.338/2024"};
+function irPasso(n){document.querySelectorAll(".passo").forEach(p=>p.classList.remove("on"));$("p"+n).classList.add("on");
+  document.querySelectorAll(".st").forEach(s=>{s.classList.toggle("on",+s.dataset.p===n);s.classList.toggle("feito",+s.dataset.p<n);});
+  if(n===2)somas();}
+document.querySelectorAll("[data-vai]").forEach(b=>b.onclick=()=>irPasso(+b.dataset.vai));
+document.querySelectorAll(".tg").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tg").forEach(x=>x.classList.remove("on"));b.classList.add("on");DEC=b.dataset.dec;
+  $("bloco-2024").style.display=DEC==="ambos"?"block":"none";
+  $("lbl-marco").textContent=DEC==="d12338_2024"?"25/12/2024":"25/12/2025";
+  $("nota-marco").innerHTML=DEC==="ambos"
+   ?"Análise simultânea: cada decreto usa a <b>fotografia do seu próprio marco</b> — informe no passo 2 também a situação em 25/12/2024."
+   :"Todos os cálculos usam o marco <b class=\'mono\'>"+fmtData(D(MARCO[DEC]))+"</b>.";
+  somas();});
+
+/* ---- ações penais dinâmicas ---- */
+let seq=0;
+function novaAcao(v){seq++;const x=Object.assign({num:"",cap:"comum",viol:"n",a:"",m:"",d:""},v||{});
+  const el=document.createElement("div");el.className="acao";el.innerHTML=
+   '<div class="cab"><b>Ação penal #'+seq+'</b><button type="button" class="rm">remover</button></div>'+
+   '<div class="form" style="margin-bottom:0">'+
+   '<div class="campo"><label>Número da ação penal</label><input class="a-num" value="'+x.num+'" placeholder="0000000-00.0000.0.00.0000"></div>'+
+   '<div class="campo"><label>Capitulação</label><select class="a-cap">'+
+   '<option value="comum"'+(x.cap==="comum"?" selected":"")+'>Crime comum</option>'+
+   '<option value="imp"'+(x.cap==="imp"?" selected":"")+'>Crime impeditivo (art. 1º — hediondo, tráfico, tortura, VDF…)</option></select></div>'+
+   '<div class="campo"><label>Com violência ou grave ameaça?</label><select class="a-viol">'+
+   '<option value="n"'+(x.viol==="n"?" selected":"")+'>Não</option><option value="s"'+(x.viol==="s"?" selected":"")+'>Sim</option></select></div>'+
+   '<div class="campo"><label>Pena imposta (a·m·d)</label><div class="pena3">'+
+   '<input class="a-a" type="number" min="0" placeholder="anos" value="'+x.a+'"><input class="a-m" type="number" min="0" placeholder="meses" value="'+x.m+'"><input class="a-d" type="number" min="0" placeholder="dias" value="'+x.d+'"></div></div></div>';
+  el.querySelector(".rm").onclick=()=>{el.remove();somas();};
+  el.querySelectorAll("input,select").forEach(i=>i.oninput=somas);
+  $("acoes").appendChild(el);somas();}
+$("add-acao").onclick=()=>novaAcao();
+function lerAcoes(){return Array.from(document.querySelectorAll(".acao")).map(e=>({
+  num:e.querySelector(".a-num").value,cap:e.querySelector(".a-cap").value,viol:e.querySelector(".a-viol").value,
+  dias:penaDias(e.querySelector(".a-a").value,e.querySelector(".a-m").value,e.querySelector(".a-d").value)}));}
+
+/* ---- fotografia por marco ---- */
+function foto(dec){const alt=(dec==="d12338_2024"&&DEC==="ambos");
+  return{cumpr:penaDias($(alt?"x-ca":"w-ca").value,$(alt?"x-cm":"w-cm").value,$(alt?"x-cd":"w-cd").value)+N($(alt?"x-rem":"w-rem").value),
+   rei:$(alt?"x-rei":"w-rei").value,reg:$(alt?"x-reg":"w-reg").value};}
+
+/* ---- somas automáticas ---- */
+function somas(){const A=lerAcoes(),S=f=>A.filter(f).reduce((t,x)=>t+x.dias,0);
+  const tot=S(()=>true),csv=S(x=>x.cap==="comum"&&x.viol==="n"),ccv=S(x=>x.cap==="comum"&&x.viol==="s"),
+        isv=S(x=>x.cap==="imp"&&x.viol==="n"),icv=S(x=>x.cap==="imp"&&x.viol==="s");
+  if($("somas"))$("somas").innerHTML=[["Soma das penas (art. 7º)",fmtDias(tot),1],["Comuns s/ violência",fmtDias(csv)],
+   ["Comuns c/ violência",fmtDias(ccv)],["Impeditivos s/ violência",fmtDias(isv)],["Impeditivos c/ violência",fmtDias(icv)],
+   ["Art. 1º — total",fmtDias(isv+icv)],["Total c/ violência",fmtDias(ccv+icv)],["Ações cadastradas",String(A.length)]]
+   .map(p=>'<div class="soma'+(p[2]?" destaque":"")+'"><small>'+p[0]+'</small><b>'+p[1]+'</b></div>').join("");
+  const c=foto(DEC==="ambos"?"d12790_2025":DEC).cumpr;
+  if($("w-reman"))$("w-reman").textContent=A.length?fmtDias(Math.max(tot-c,0)):"—";}
+["w-ca","w-cm","w-cd","w-rem","x-ca","x-cm","x-cd","x-rem"].forEach(i=>{if($(i))$(i).oninput=somas;});
+
+/* ================= MOTOR dos decretos (v0.2) ================= */
+function analisar(decId){
+  const A=lerAcoes(),f=foto(decId),marco=D(MARCO[decId]),pub=D(PUB[decId]);
+  const tot=A.reduce((t,x)=>t+x.dias,0),impD=A.filter(x=>x.cap==="imp").reduce((t,x)=>t+x.dias,0);
+  const comD=tot-impD,temViol=A.some(x=>x.cap==="comum"&&x.viol==="s");
+  let mem=[],blocos=[],fontes=new Set(["Dec. "+(decId==="d12790_2025"?"12.790/2025":"12.338/2024")]);
+  const M=(k,v)=>mem.push([k,v]);
+  if(!A.length)return{html:'<div class="veredito meio"><h4>Sem ações penais</h4><p>Cadastre ao menos uma ação no passo 1.</p></div>',fontes:[]};
+  /* art. 6º */
+  let obstaFalta=false;
+  if($("w-falta").value){const ft=D($("w-falta").value),ini=new Date(marco);ini.setFullYear(ini.getFullYear()-1);
+    if(ft>pub){M("Falta grave de "+fmtData(ft),"POSTERIOR à publicação — não impede (art. 6º, p.u.)");fontes.add("art. 6º, p.u. + Tema 1195/STJ (retif.)");}
+    else if(ft>=ini&&ft<=marco){obstaFalta=true;M("Falta grave de "+fmtData(ft),"DENTRO da janela de 12 meses — impede (art. 6º)");fontes.add("art. 6º + Tema 1195/STJ (retif.)");}
+    else M("Falta grave de "+fmtData(ft),"fora da janela — não impede");}
+  /* art. 7º, p.u. — pedágio */
+  let saldo=f.cumpr;
+  if(impD>0){const ped=Math.ceil(impD*2/3);fontes.add("art. 7º, p.u. (pedágio)");
+    M("Pedágio (2/3 da pena impeditiva)",fmtDias(ped));
+    if(f.cumpr>=ped){saldo=f.cumpr-ped;M("Cumprido após o pedágio",fmtDias(saldo)+" — atendido");}
+    else{saldo=-1;M("Cumprido no marco",fmtDias(f.cumpr)+" — pedágio NÃO atendido");}}
+  /* art. 9º */
+  let indulto=null;
+  if(saldo>=0&&!obstaFalta&&comD>0){
+    const fr=(p,r)=>f.rei==="p"?p:r,anos=n=>n/365,hip=[];
+    if(!temViol&&anos(tot)<=8)hip.push(["I (sem violência, pena ≤ 8a)",fr(1/5,1/3)]);
+    if(!temViol&&anos(tot)<=12)hip.push(["II (sem violência, pena ≤ 12a)",fr(1/3,1/2)]);
+    if(temViol&&anos(tot)<=4)hip.push(["III (com violência, pena ≤ 4a)",fr(1/3,1/2)]);
+    if(f.reg==="aberto"||f.reg==="prd")hip.push(["VII (aberto/PRD/sursis)",fr(1/6,1/5)]);
+    for(const h of hip){const req=Math.ceil(comD*h[1]);
+      if(saldo>=req){indulto="art. 9º, "+h[0]+" — exigido "+fmtDias(req)+"; cumprido aplicável "+fmtDias(saldo);fontes.add("art. 9º, "+h[0].split(" ")[0]);break;}
+      M("art. 9º, "+h[0],"exigido "+fmtDias(req)+" > aplicável "+fmtDias(saldo));}
+    if(!indulto&&(f.reg==="aberto"||f.reg==="lc")){const teto=(f.rei==="p"?6:4)*365,rem=Math.max(tot-f.cumpr,0);
+      if(rem<=teto){indulto="art. 9º, VIII — remanescente no marco "+fmtDias(rem)+" ≤ "+(f.rei==="p"?"6":"4")+" anos ("+(f.reg==="lc"?"livramento":"regime aberto")+")";fontes.add("art. 9º, VIII");}
+      else M("art. 9º, VIII","remanescente "+fmtDias(rem)+" acima do teto");}}
+  blocos.push(veredito(indulto?"sim":"nao",
+    indulto?"INDULTO — indício de cabimento":"INDULTO — não identificado",
+    indulto||(obstaFalta?"Obstado pela falta grave na janela (art. 6º).":saldo<0?"Pedágio do art. 7º, p.u. não atendido.":"Nenhuma hipótese do art. 9º satisfeita com os dados informados."),mem));
+  /* art. 13 */
+  if(!indulto&&!obstaFalta&&saldo>=0){
+    const m2=[],M2=(k,v)=>m2.push([k,v]);fontes.add("art. 13, §§1º-2º, 5º");
+    const rem=Math.max(tot-f.cumpr,0),base=f.cumpr>rem?f.cumpr:rem;
+    M2("Pena remanescente no marco",fmtDias(rem));
+    if(f.cumpr>rem)M2("Base do cálculo (art. 13, §1º)","CUMPRIDO "+fmtDias(f.cumpr));
+    let req=Math.ceil(comD*(f.rei==="p"?1/5:1/4)),ok=saldo>=req;
+    if($("w-comut").value==="s"){ok=true;M2("Comutação anterior (art. 13, §2º)","dispensa novo requisito temporal");}
+    else M2("Requisito ("+(f.rei==="p"?"1/5":"1/4")+" da pena comum)",fmtDias(req)+(ok?" — atendido":" — não atendido"));
+    if(ok){const red=Math.ceil(base/5);M2("Redução (1/5 sobre a base)",fmtDias(red));
+      blocos.push(veredito("sim","COMUTAÇÃO — indício de cabimento","Redução estimada de "+fmtDias(red)+".",m2));}
+    else blocos.push(veredito("nao","COMUTAÇÃO — requisito temporal não atendido","",m2));
+  }else if(indulto)blocos.push(veredito("meio","COMUTAÇÃO — não analisada","O indulto prevalece (art. 13, §5º).",[]));
+  const resumo=[["INDULTO",indulto?"sim":"nao",indulto||(obstaFalta?"falta grave na janela (art. 6º)":saldo<0?"pedágio do art. 7º, p.u.":"nenhuma hipótese do art. 9º")]];
+  if(blocos.length>1){const c=blocos[1];resumo.push(["COMUTAÇÃO",c.indexOf("veredito sim")>-1?"sim":c.indexOf("veredito meio")>-1?"meio":"nao",c.indexOf("veredito meio")>-1?"o indulto prevalece (art. 13, §5º)":c.indexOf("veredito sim")>-1?"redução de 1/5 — ver memória":"requisito temporal não atendido"]);}
+  return{html:blocos.join(""),fontes:Array.from(fontes),resumo:resumo};}
+function veredito(cls,tit,txt,mem){return '<div class="veredito '+cls+'"><span class="selo s-conf">[CONFERIR CÁLCULO]</span>'+
+ '<h4>'+tit+'</h4><p style="font-size:13px;margin-top:4px">'+txt+'</p><div class="mem">'+memHTML(mem)+'</div></div>';}
+
+/* ---- executar + relatório ---- */
+let ULTIMA=null;
+$("rodar").onclick=()=>{
+  let corpo="",fontes=[];
+  let RES={};
+  if(DEC==="ambos"){const rA=analisar("d12790_2025"),rB=analisar("d12338_2024");fontes=rA.fontes.concat(rB.fontes);RES={d12790_2025:rA.resumo,d12338_2024:rB.resumo};
+    corpo='<div class="grid2" style="grid-template-columns:1fr 1fr">'+
+     '<div class="card"><h3>'+NOME.d12790_2025+' · marco 25/12/2025</h3>'+rA.html+'</div>'+
+     '<div class="card"><h3>'+NOME.d12338_2024+' · marco 25/12/2024</h3>'+rB.html+'</div></div>'+
+     '<p class="nota" style="margin-top:8px">Cada coluna usa a fotografia do próprio marco. Sendo ambos cabíveis, aplica-se o direito mais benéfico; dentro de cada decreto o indulto prevalece sobre a comutação (art. 13, §5º).</p>';}
+  else{const r=analisar(DEC);fontes=r.fontes;RES={};RES[DEC]=r.resumo;
+    corpo='<div class="card"><h3>'+NOME[DEC]+' · marco '+fmtData(D(MARCO[DEC]))+'</h3>'+r.html+
+     '<p class="nota">Para comparar com o outro decreto usando a fotografia correta daquele marco, use "Analisar os dois" no passo 1.</p></div>';}
+  corpo+='<p class="nota" style="margin-top:10px">Motor v0.2: art. 1º por capitulação declarada · art. 6º com Tema 1195 e parágrafo único · pedágio do art. 7º · art. 9º (I, II, III, VII e VIII) · art. 13 (§§1º, 2º e 5º). Incisos IV–VI e IX–XVI, redutor do §2º e arts. 10–12: próxima versão. Toda saída exige conferência humana.</p>';
+  $("resultado-analise").innerHTML=corpo;
+  ULTIMA={quando:new Date(),dec:DEC,fontes:fontes,res:RES};montaRelatorio();irPasso(3);};
+$("ir-rel").onclick=()=>document.querySelector('nav button[data-t="rel"]').click();
+function montaRelatorio(){if(!ULTIMA)return;
+  $("rel-vazio").style.display="none";$("rel-cheio").style.display="grid";
+  var decTxt=ULTIMA.dec==="ambos"?"Decretos 12.790/2025 e 12.338/2024":NOME[ULTIMA.dec];
+  $("rel-titulo").textContent="Ficha de triagem — "+decTxt;
+  var A=lerAcoes(),imp=A.some(function(x){return x.cap==="imp"});
+  var it=[["1","Crime impeditivo (art. 1º)?",imp?"Sim":"Não",imp?"s-conf":"s-ok",imp?"aplica-se o pedágio de 2/3 do art. 7º, p.u.":""],
+   ["2","Falta grave informada?",$("w-falta").value?fmtData(D($("w-falta").value)):"Nenhuma",$("w-falta").value?"s-conf":"s-ok",$("w-falta").value?"situação na janela: ver vereditos por decreto":""],
+   ["3","Comutação em decreto anterior?",$("w-comut").value==="s"?"Sim":"Não",$("w-comut").value==="s"?"s-ok":"s-conf",$("w-comut").value==="s"?"art. 13, §2º: dispensa novo requisito temporal":""],
+   ["4","Ações penais cadastradas",String(A.length),"s-ok","frações e tetos calculados por natureza e violência"]];
+  var html='<div class="fid"><span>'+($("w-nome").value||"Assistido não identificado")+'</span><span>EP '+($("w-proc").value||"—")+'</span><span>'+fmtData(ULTIMA.quando)+'</span></div>';
+  html+=it.map(function(r){return '<div class="fitem"><span class="n">'+r[0]+'</span><div class="q">'+r[1]+(r[4]?'<small>'+r[4]+'</small>':'')+'</div><span class="selo '+r[3]+'">'+r[2]+'</span></div>';}).join("");
+  html+='<div style="margin-top:12px"><b style="font-family:Archivo;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--tinta2)">Vereditos</b><br>';
+  Object.keys(ULTIMA.res).forEach(function(d){ULTIMA.res[d].forEach(function(v){
+    html+='<span class="vchip '+v[1]+'">'+(d==="d12790_2025"?"12.790/25":"12.338/24")+' · '+v[0]+(v[1]==="sim"?" — indício de cabimento":v[1]==="meio"?" — não analisada":" — não")+'</span>';});});
+  html+='</div><p class="nota" style="margin-top:10px">Memórias completas na aba Análise (passo 3). Todos os valores: [CONFERIR CÁLCULO].</p>';
+  $("rel-ficha").innerHTML=html;$("rel-ficha").style.whiteSpace="normal";
+  var F={"art. 6º, p.u. + Tema 1195/STJ (retif.)":["art. 6º, p.u. + Tema 1195 (retif.)","STJ, EDcl REsp 2.011.706/MG, DJe 22/06/26",
+     "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195"],
+   "art. 6º + Tema 1195/STJ (retif.)":["art. 6º (janela de 12 meses) + Tema 1195","STJ, EDcl REsp 2.011.706/MG, DJe 22/06/26",
+     "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195"],
+   "art. 7º, p.u. (pedágio)":["art. 7º, p.u. — pedágio de 2/3","Dec. 12.790/2025 · Dec. 12.338/2024",""],
+   "art. 13, §§1º-2º, 5º":["art. 13, §§1º, 2º e 5º — comutação","Dec. 12.790/2025 · Dec. 12.338/2024",""],
+   "Dec. 12.790/2025":["Decreto 12.790/2025 (íntegra)","DOU 23/12/2025","https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/d12790.htm"],
+   "Dec. 12.338/2024":["Decreto 12.338/2024 (íntegra)","DOU 23/12/2024","https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12338.htm"]};
+  var vis={},rows="";
+  ULTIMA.fontes.forEach(function(x){var k=F[x]?x:(x.indexOf("art. 9º")===0?"__a9":x);
+    if(vis[k])return;vis[k]=1;
+    var r=F[x]||[(x.indexOf("art. 9º")===0?x+" — hipótese de indulto":x),"Dec. 12.790/2025 · Dec. 12.338/2024",""];
+    rows+="<tr><td class=\"mono\">"+r[0]+"</td><td>"+(r[2]?'<a href="'+r[2]+'" target="_blank" rel="noopener">'+r[1]+' ↗</a>':r[1])+"</td></tr>";});
+  $("rel-fontes").innerHTML="<tr><th>Regra</th><th>Fonte</th></tr>"+rows;}
+$("rel-copiar").onclick=()=>{
+  var t=[];t.push("FICHA DE TRIAGEM — "+$("rel-titulo").textContent.replace("Ficha de triagem — ",""));
+  t.push(($("w-nome").value||"Assistido não identificado")+"  ·  EP "+($("w-proc").value||"—")+"  ·  "+fmtData(ULTIMA.quando));t.push("");
+  document.querySelectorAll("#rel-ficha .fitem").forEach(function(f){
+    t.push(f.querySelector(".n").textContent+". "+f.querySelector(".q").childNodes[0].textContent.trim()+"  ["+f.querySelector(".selo").textContent+"]");
+    var s=f.querySelector("small");if(s)t.push("   "+s.textContent);});
+  t.push("");t.push("VEREDITOS:");
+  document.querySelectorAll("#rel-ficha .vchip").forEach(function(v){t.push(" - "+v.textContent);});
+  t.push("");t.push("Todos os valores: [CONFERIR CALCULO]");
+  navigator.clipboard.writeText(t.join(String.fromCharCode(10)));
+  $("rel-copiar").textContent="Copiado ✓";setTimeout(()=>$("rel-copiar").textContent="Copiar ficha",1500);};
+$("copiar-json").onclick=()=>{navigator.clipboard.writeText(JSON.stringify({dec:DEC,nome:$("w-nome").value,proc:$("w-proc").value,
+  acoes:lerAcoes(),cumprido:[$("w-ca").value,$("w-cm").value,$("w-cd").value],remicao:$("w-rem").value,
+  rei:$("w-rei").value,reg:$("w-reg").value,falta:$("w-falta").value,comutAnterior:$("w-comut").value,
+  foto2024:DEC==="ambos"?{cumprido:[$("x-ca").value,$("x-cm").value,$("x-cd").value],remicao:$("x-rem").value,reg:$("x-reg").value,rei:$("x-rei").value}:null},null,1));
+  $("copiar-json").textContent="Copiado ✓";setTimeout(()=>$("copiar-json").textContent="Copiar análise (JSON)",1500);};
+
+/* ---- exemplo de testes (opcional, explícito) ---- */
+$("btn-exemplo").onclick=e=>{e.stopPropagation();
+  $("acoes").innerHTML="";seq=0;
+  novaAcao({num:"0001-CT01 (furto §4º)",cap:"comum",viol:"n",a:2,m:0,d:0});
+  novaAcao({num:"0002-CT01 (roubo §2º,II)",cap:"comum",viol:"s",a:4,m:10,d:2});
+  $("w-nome").value="Exemplo CT-01";$("w-proc").value="0001112-XX.2021";
+  $("w-ca").value=4;$("w-cm").value=0;$("w-cd").value=26;$("w-rem").value=49;
+  $("w-rei").value="r";$("w-reg").value="aberto";$("w-falta").value="2024-04-15";$("w-comut").value="s";
+  $("x-ca").value=3;$("x-cm").value=1;$("x-cd").value=0;$("x-rem").value=33;$("x-reg").value="fechado";$("x-rei").value="r";
+  atualizaHdr();somas();};
+
+/* ================= CALCULADORA ================= */
+/* Progressão */
+const ERAS=[
+ {ate:D("2020-01-22"),nome:"até 22/01/2020 (Lei 11.464 p/ hediondos)",f:{sv:{p:1/6,r:1/6},cv:{p:1/6,r:1/6},h:{p:2/5,r:3/5},hm:{p:2/5,r:3/5}}},
+ {ate:D("2026-03-23"),nome:"Pacote Anticrime (23/01/2020–23/03/2026)",f:{sv:{p:.16,r:.20},cv:{p:.25,r:.30},h:{p:.40,r:.60},hm:{p:.50,r:.70}}},
+ {ate:D("9999-01-01"),nome:"Leis 15.358/15.402 (fatos ≥ 24/03/2026)",f:{sv:{p:.16,r:.20},cv:{p:.25,r:.30},h:{p:.70,r:.80},hm:{p:.75,r:.85}}}];
+$("pg-go").onclick=()=>{
+  if(!$("pg-fato").value||!$("pg-base").value){mostraRes("pg","Preencha as datas",[]);return;}
+  const fato=D($("pg-fato").value),base=D($("pg-base").value);
+  const dias=penaDias($("pg-a").value,$("pg-m").value,$("pg-d").value);
+  if(!dias){mostraRes("pg","Informe a pena",[]);return;}
+  const nat=$("pg-nat").value,rei=$("pg-rei").value;
+  const era=ERAS.find(e=>fato<=e.ate);let frac=era.f[nat][rei],nomeEra=era.nome;
+  ERAS.forEach(e=>{if(e.f[nat][rei]<frac){frac=e.f[nat][rei];nomeEra=e.nome+" — retroação benéfica (Tema 1354)";}});
+  const exig=Math.ceil(dias*frac),liq=Math.max(exig-N($("pg-rem").value),0),dt=addDias(base,liq);
+  mostraRes("pg",fmtData(dt),[["Era aplicada",nomeEra],["Fração",(frac*100).toFixed(2).replace(/\\.00$/,"")+"%"],
+   ["Pena considerada",fmtDias(dias)+" ("+dias+" dias)"],["Requisito objetivo",exig+" dias"],
+   ["(−) remição",N($("pg-rem").value)+" dias"],["Data-base + "+liq+" dias",fmtData(dt)]]);};
+/* Prescrição */
+$("ps-go").onclick=()=>{
+  const dias=penaDias($("ps-a").value,$("ps-m").value,$("ps-d").value);
+  if(!dias||!$("ps-ini").value){mostraRes("ps","Preencha pena e termo inicial",[]);return;}
+  const anos=dias/365;let prazo,mem=[];
+  if(anos<1)prazo=$("ps-2010").value==="s"?2:3;else if(anos<=2)prazo=4;else if(anos<=4)prazo=8;
+  else if(anos<=8)prazo=12;else if(anos<=12)prazo=16;else prazo=20;
+  mem.push(["Pena (base do art. 109/110)",fmtDias(dias)],["Prazo do art. 109",prazo+" anos"]);
+  let meses=prazo*12;
+  if($("ps-rei").value==="s"){meses=Math.round(meses*4/3);mem.push(["+1/3 reincidência (art. 110)",Math.floor(meses/12)+"a "+(meses%12)+"m"]);}
+  if($("ps-115").value==="s"){meses=Math.round(meses/2);mem.push(["Metade (art. 115)",Math.floor(meses/12)+"a "+(meses%12)+"m"]);}
+  const fim=addAMD(D($("ps-ini").value),0,meses,0);
+  mem.push(["Termo inicial",fmtData(D($("ps-ini").value))],["Prescreve em",fmtData(fim)]);
+  mostraRes("ps",fmtData(fim),mem);};
+/* Livramento */
+$("lv-go").onclick=()=>{
+  const dias=penaDias($("lv-a").value,$("lv-m").value,$("lv-d").value);
+  if(!dias||!$("lv-base").value){mostraRes("lv","Preencha pena e data-base",[]);return;}
+  const sit=$("lv-sit").value;
+  if(sit==="hre"){mostraRes("lv","VEDADO",[["art. 83, V, do CP","reincidente específico em hediondo — sem livramento"]]);return;}
+  if(dias<730){mostraRes("lv","Pena inferior a 2 anos",[["art. 83, caput","livramento exige pena ≥ 2 anos (some as penas — art. 84)"]]);return;}
+  const frac=sit==="np"?1/3:sit==="r"?1/2:2/3;
+  const exig=Math.floor(dias*frac)+1;/* MAIS DE: estritamente maior */
+  const liq=Math.max(exig-N($("lv-rem").value),0),dt=addDias(D($("lv-base").value),liq);
+  let mem=[["Fração (art. 83)","mais de "+(sit==="np"?"1/3":sit==="r"?"1/2":"2/3")],
+    ["Requisito objetivo (estritamente maior)",exig+" dias"],["(−) remição",N($("lv-rem").value)+" dias"],["Data provável",fmtData(dt)]];
+  if($("lv-falta").value){const ft=D($("lv-falta").value),fato=$("lv-fato").value?D($("lv-fato").value):null;
+    if(fato&&fato<D("2020-01-23"))mem.push(["Alínea b (12m sem falta)","INAPLICÁVEL — fato anterior a 23/01/2020"]);
+    else{const lib=addAMD(ft,1,0,0);mem.push(["Alínea b (12m sem falta)","satisfeita a partir de "+fmtData(lib)]);
+      if(lib>dt)mem.push(["Atenção","a janela da alínea b ("+fmtData(lib)+") supera o requisito objetivo"]);}}
+  mem.push(["Súm. 441/STJ","a falta NÃO interrompe o prazo objetivo"]);
+  mostraRes("lv",fmtData(dt),mem);};
+/* Remição/Detração */
+$("rd-go").onclick=()=>{
+  const trab=Math.floor(N($("rd-trab").value)/3);let est=Math.floor(N($("rd-est").value)/12);
+  let mem=[["Trabalho: "+N($("rd-trab").value)+" dias ÷ 3",trab+" dias remidos"],["Estudo: "+N($("rd-est").value)+" h ÷ 12",est+" dias remidos"]];
+  if($("rd-conc").value==="s"){const b=Math.floor(est/3);est+=b;mem.push(["Bônus de 1/3 (conclusão de ensino)","+"+b+" dias"]);}
+  let det=0;
+  if($("rd-i").value&&$("rd-f").value){det=Math.round((D($("rd-f").value)-D($("rd-i").value))/864e5)+1;
+    mem.push(["Detração ("+fmtData(D($("rd-i").value))+" a "+fmtData(D($("rd-f").value))+", inclusive)",det+" dias"]);}
+  mem.push(["TOTAL a levar à homologação",(trab+est)+" remidos"+(det?" + "+det+" de detração":"")]);
+  mostraRes("rd",(trab+est+det)+" dias",mem);};
+/* Unificação */
+function novaPena(){const el=document.createElement("div");el.className="pena3";el.style.marginBottom="8px";
+  el.innerHTML='<input type="number" min="0" placeholder="anos" class="u-a"><input type="number" min="0" placeholder="meses" class="u-m"><input type="number" min="0" placeholder="dias" class="u-d"><button type="button" class="rm" style="border:0;background:none;color:var(--carimbo);cursor:pointer;font-family:IBM Plex Mono">×</button>';
+  el.querySelector(".rm").onclick=()=>el.remove();$("un-lista").appendChild(el);}
+$("un-add").onclick=novaPena;novaPena();novaPena();
+$("un-go").onclick=()=>{
+  let tot=0;document.querySelectorAll("#un-lista .pena3").forEach(p=>{
+    tot+=penaDias(p.querySelector(".u-a").value,p.querySelector(".u-m").value,p.querySelector(".u-d").value);});
+  if(!tot){mostraRes("un","Informe as penas",[]);return;}
+  let mem=[["Soma das penas (art. 111 da LEP)",fmtDias(tot)+" ("+tot+" dias)"]];
+  let principal=fmtDias(tot);
+  if($("un-base").value){const fim=addDias(D($("un-base").value),Math.max(tot-N($("un-abat").value),0));
+    mem.push(["(−) abatimentos",N($("un-abat").value)+" dias"],["Término projetado",fmtData(fim)]);principal=fmtData(fim);}
+  mostraRes("un",principal,mem);};
+
+/* ================= Precedentes: filtro ================= */
+$("prec-busca").oninput=e=>{const q=e.target.value.toLowerCase();
+  document.querySelectorAll("#prec .prec").forEach(p=>p.style.display=p.textContent.toLowerCase().includes(q)?"flex":"none");};
+
+/* ================= Tauri: base, atualização e upload ================= */
+let BASE=null;
+async function carregaBase(){if(!T)return;
+  try{BASE=JSON.parse(await T.core.invoke("get_base"));
+    $("selo-versao").textContent="v"+BASE.meta.versao;
+    $("selo-origem").textContent="("+await T.core.invoke("get_base_info")+")";
+  }catch(e){}}
+async function checarAtualizacao(manual){if(!T)return;
+  $("selo-status").textContent="verificando atualização…";
+  try{const r=await T.core.invoke("atualizar_base");
+    if(r.startsWith("atualizada:")){await carregaBase();
+      $("selo-status").textContent="base atualizada para "+r.split(":")[1]+" ✓";}
+    else $("selo-status").textContent="base em dia ("+r.split(":")[1]+")";
+  }catch(err){$("selo-status").textContent=manual?String(err):"offline — usando a base local";}}
+
+const T=window.__TAURI__;
+async function boot(){
+  if(!T){$("selo-check").style.display="none";$("drop-t").textContent="Upload de PDF disponível no aplicativo instalado";
+    $("drop-s").textContent="Neste modo de visualização, preencha à mão ou use o exemplo de testes.";return;}
+  await carregaBase();
+  $("selo-check").onclick=()=>checarAtualizacao(true);
+  checarAtualizacao(false);
+  const abrir=async()=>{const sel=await T.dialog.open({multiple:false,filters:[{name:"PDF do SEEU",extensions:["pdf"]}]});
+    if(!sel)return;$("drop-t").textContent="Lendo o atestado…";
+    try{const tx=await T.core.invoke("parse_pdf",{path:sel});preencher(tx);}
+    catch(err){$("drop-t").textContent="Falha na leitura";$("drop-s").textContent=String(err);}};
+  $("drop").onclick=abrir;
+  $("drop").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")abrir();};}
+function preencher(t){
+  let n=0;const pega=(re)=>{const m=t.match(re);return m?m:null;};
+  const nome=pega(/Nome(?: do Reeducando)?[:\\s]+([A-ZÀ-Ú][A-Za-zÀ-ú \\.]{4,60})/);
+  if(nome){$("w-nome").value=nome[1].trim();n++;}
+  const proc=pega(/(\\d{7}-\\d{2}\\.\\d{4}\\.\\d\\.\\d{2}\\.\\d{4})/);
+  if(proc){$("w-proc").value=proc[1];n++;}
+  const rei=pega(/Reincidente[:\\s]+(Sim|N[aã]o)/i);
+  if(rei){$("w-rei").value=rei[1].toLowerCase().startsWith("s")?"r":"p";n++;}
+  const rem=pega(/Remido[s]?[^\\d]{0,12}(\\d{1,4})/i);
+  if(rem){$("w-rem").value=rem[1];n++;}
+  const reg=pega(/Regime\\s+Atual[:\\s]*([A-Za-zçÇ]+)/i);
+  if(reg){const r=reg[1].toLowerCase();$("w-reg").value=r.startsWith("fech")?"fechado":r.startsWith("semi")?"semiaberto":r.startsWith("aber")?"aberto":r.startsWith("livr")?"lc":$("w-reg").value;n++;}
+  atualizaHdr();
+  $("drop-t").textContent="Atestado lido — "+n+" campo(s) pré-preenchido(s)";
+  $("drop-s").textContent="Ações penais e pena cumprida por marco são cadastradas manualmente nesta versão. Confira tudo antes de analisar.";}
+/* ================= inicialização ================= */
+document.addEventListener("click",function(e){var a=e.target.closest("a[target=_blank]");
+  if(a&&T&&T.opener){e.preventDefault();T.opener.openUrl(a.href);}});
+novaAcao();
+boot();
+</script>
+</body>
+</html>

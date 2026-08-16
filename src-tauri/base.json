@@ -1,0 +1,917 @@
+{
+ "meta": {
+  "versao": "2026.08.2",
+  "schema_version": 1,
+  "publicado_em": "2026-08-16",
+  "dossies_fonte": [
+   "1.1-prescricao",
+   "1.2-progressao",
+   "1.3-temas",
+   "1.4-eras-art112",
+   "1.5a-livramento",
+   "1.5b-decreto-12790"
+  ],
+  "aviso": "Base validada pelo curador humano em 2026-08-16. Toda regra carrega fundamento e âncora temporal. Nada nesta base substitui a conferência do defensor.",
+  "convencao_ancora": {
+   "data_do_fato": "lei penal material — gravosa não retroage; benéfica retroage (CF art.5º,XL); escolher a menor fração por condenação (STJ Tema 1354)",
+   "data_do_decreto": "requisitos de indulto/comutação aferidos no marco do decreto",
+   "data_da_falta": "cometimento; fuga = infração permanente, protrai até a recaptura (STJ AgRg HC 779723; HC 527625)"
+  },
+  "changelog": "Mapeado Decreto 12.338/2024 (espelho do 12.790 com deltas); Fase 2 de conteudo concluida"
+ },
+ "prescricao": {
+  "prazos_art109": [
+   {
+    "pena_max_anos": 0.999,
+    "prazo_anos": 3,
+    "vigencia_desde": "2010-05-06",
+    "regra_anterior": {
+     "prazo_anos": 2,
+     "ate": "2010-05-05"
+    },
+    "fonte": "CP art.109,VI; Lei 12.234/2010"
+   },
+   {
+    "pena_min": 1,
+    "pena_max": 2,
+    "prazo_anos": 4
+   },
+   {
+    "pena_min": 2,
+    "pena_max": 4,
+    "prazo_anos": 8
+   },
+   {
+    "pena_min": 4,
+    "pena_max": 8,
+    "prazo_anos": 12
+   },
+   {
+    "pena_min": 8,
+    "pena_max": 12,
+    "prazo_anos": 16
+   },
+   {
+    "pena_min": 12,
+    "prazo_anos": 20
+   }
+  ],
+  "ppe_base": "pena_aplicada",
+  "fonte_base": "CP art.110 caput",
+  "acrescimo_reincidencia": {
+   "fracao": "1/3",
+   "aplica": "somente_ppe",
+   "fonte": "CP art.110; STJ RE nos EDcl AgRg HC 764111"
+  },
+  "reducao_metade_art115": {
+   "menor21_na": "data_do_fato",
+   "maior70_na": "data_da_sentenca",
+   "excecao": {
+    "hipotese": "violencia_sexual_contra_mulher",
+    "vigencia_desde": "2024-10-09",
+    "fonte": "Lei 14.994/2024",
+    "direcao": "gravosa_irretroativa"
+   },
+   "cumulacao_com_110": {
+    "ordem": "reduz_metade_depois_soma_terco",
+    "status": "doutrina_sem_precedente_qualificado",
+    "exibir_nota": true,
+    "pendencia": "P-02"
+   }
+  },
+  "termo_inicial": {
+   "regra": "duas_eras_tema_788",
+   "corte": "2020-11-12",
+   "era_antiga": {
+    "condicao": "transito_acusacao <= corte OU prescricao_ja_declarada",
+    "marco": "transito_para_acusacao",
+    "fonte": "modulação ARE 848.107; STJ AgRg AREsp 2487732"
+   },
+   "era_nova": {
+    "condicao": "transito_acusacao > corte",
+    "marco": "transito_para_ambas_as_partes",
+    "fonte": "STF Tema 788 (ARE 848.107, Pleno, j.03/07/2023)"
+   }
+  },
+  "impeditivas": [
+   {
+    "regra": "preso_por_outro_motivo_nao_corre",
+    "fonte": "CP art.116, p.u."
+   }
+  ],
+  "interruptivas": [
+   {
+    "evento": "inicio_ou_continuacao_cumprimento",
+    "fonte": "CP art.117,V"
+   },
+   {
+    "evento": "reincidencia",
+    "fonte": "CP art.117,VI"
+   }
+  ],
+  "evasao": {
+   "base": "restante_da_pena",
+   "conta_de": "data_da_fuga",
+   "fonte": "CP art.113"
+  },
+  "falta_grave": {
+   "prazo_anos": 3,
+   "desde": "2010-05-06",
+   "anterior": 2,
+   "marco": "cometimento",
+   "marco_fuga": "recaptura",
+   "termo_final": "homologacao_judicial",
+   "veda_art114": true,
+   "fonte": "STJ RHC 58726; AgRg REsp 2214069 (2026); AgRg HC 779723"
+  },
+  "multa": {
+   "isolada_anos": 2,
+   "cumulativa": "prazo_da_ppl",
+   "fonte": "CP art.114"
+  },
+  "prd": {
+   "regra": "mesmos_prazos_ppl",
+   "fonte": "CP art.109, p.u."
+  }
+ },
+ "progressao": {
+  "eras": [
+   {
+    "id": "era1",
+    "fatos_ate": "2020-01-22",
+    "geral": "1/6",
+    "hediondo": {
+     "primario": "2/5",
+     "reincidente": "3/5",
+     "desde": "[CONFERIR DOU Lei 11.464/2007]",
+     "fonte": "Lei 11.464/2007"
+    }
+   },
+   {
+    "id": "era2",
+    "fatos_de": "2020-01-23",
+    "fatos_ate": "2026-03-23",
+    "fonte": "Lei 13.964/2019",
+    "fracoes": {
+     "primario_sem_violencia": "16%",
+     "reincidente_sem_violencia": "20%",
+     "primario_com_violencia": "25%",
+     "reincidente_com_violencia": "30%",
+     "hediondo_primario": "40%",
+     "hediondo_morte_primario": "50%",
+     "hediondo_reincidente_especifico": "60%",
+     "hediondo_morte_reincidente_especifico": "70%"
+    },
+    "lacunas_resolvidas": [
+     {
+      "caso": "hediondo_sem_morte_reincidente_generico",
+      "fracao": "40%",
+      "fonte": "STJ Tema 1084 (transitado)"
+     },
+     {
+      "caso": "hediondo_com_morte_reincidente_generico",
+      "fracao": "50%",
+      "livramento": "art.83,V",
+      "fonte": "STJ Tema 1196",
+      "vigilancia": "sobrestado_tema_1319_stf"
+     }
+    ],
+    "sub_era_feminicidio": {
+     "fracao": "55%",
+     "vigente": [
+      "2024-10-09",
+      "2026-03-23"
+     ],
+     "fonte": "Lei 14.994/2024, art.112,VI-A (revogado pela 15.358/2026)"
+    }
+   },
+   {
+    "id": "era3a",
+    "fatos_de": "2026-03-24",
+    "fatos_ate": "2026-05-07",
+    "fonte": "Lei 15.358/2026 (DOU 24/03/2026)",
+    "delta": {
+     "hediondo_primario": "70%",
+     "hediondo_morte_primario": "75%",
+     "comando_orcrim_ultraviolenta": "75%",
+     "milicia": "75%",
+     "feminicidio_primario": "75%",
+     "hediondo_reincidente": "80%",
+     "hediondo_morte_reincidente": "85%",
+     "vedado_livramento": [
+      "hediondo_morte_primario",
+      "comando_orcrim_ultraviolenta",
+      "feminicidio_primario",
+      "hediondo_morte_reincidente"
+     ]
+    }
+   },
+   {
+    "id": "era3b",
+    "fatos_de": "2026-05-08",
+    "fonte": "Lei 15.402/2026 (vetos aos V-X mantidos: hediondos seguem a 15.358)",
+    "fracoes": {
+     "geral_caput": "1/6+merito",
+     "primario_com_violencia_salvo_tituloXII": "25%",
+     "reincidente_com_violencia_salvo_tituloXII": "30%",
+     "reincidente_diverso": "20%",
+     "inciso_IV_13964_subsistente": "30%"
+    },
+    "vigilancia": "adis_7966_7967"
+   }
+  ],
+  "regra_selecao": {
+   "metodo": "por_condenacao_menor_fracao_entre_eras_aplicaveis",
+   "fonte": "STJ Tema 1354; STF RE 1531595 (sem lex tertia)"
+  },
+  "mapeamento": "por_conteudo_nunca_pelo_numero_do_inciso",
+  "exame_criminologico": {
+   "obrigatorio_desde_fato": "2024-04-11",
+   "fonte": "Lei 14.843/2024; STJ HC 950729; STF RE 1530878",
+   "fatos_anteriores": {
+    "regra": "facultativo_fundamentacao_concreta",
+    "fonte": "Súm.439/STJ; SV 26; STF Rcl 82819",
+    "alerta": "falta_grave_recente_e_fundamento_idoneo (STF RHC 274350)"
+   }
+  },
+  "falta_grave": {
+   "interrompe": true,
+   "reinicio_marco": "cometimento (fuga=recaptura)",
+   "base_reinicio": {
+    "fatos_falta_desde": "2020-01-23",
+    "base": "pena_remanescente",
+    "fonte": "LEP art.112,§6º"
+   },
+   "anterior": {
+    "base": "pena_total",
+    "fonte": "Súm.534/STJ; Tema 709"
+   }
+  },
+  "data_base": {
+   "regra": "implemento_dos_requisitos_nao_data_da_decisao",
+   "fonte": "STJ Tema 1165"
+  },
+  "per_saltum": {
+   "vedado": true,
+   "fonte": "Súm.491/STJ"
+  },
+  "falta_de_vaga": {
+   "regra": "parametros_re_641320",
+   "fonte": "SV 56; STJ Tema 993"
+  },
+  "progressao_especial_mulher": {
+   "fracao": "1/8",
+   "requisitos_cumulativos": 5,
+   "revogacao": "novo_crime_doloso_ou_falta_grave",
+   "fonte": "LEP art.112,§§3º-4º (Lei 13.769/2018)"
+  },
+  "trafico_privilegiado_nao_hediondo": {
+   "fonte": "LEP art.112,§5º"
+  }
+ },
+ "livramento": {
+  "pena_minima_anos": 2,
+  "soma": "CP art.84",
+  "fracoes": {
+   "nao_reincidente_doloso_bons_antecedentes": ">1/3",
+   "reincidente_doloso": ">1/2",
+   "hediondo_nao_reincidente_especifico": ">2/3",
+   "hediondo_reincidente_especifico": "vedado"
+  },
+  "comparador": "estritamente_maior",
+  "alinea_b": {
+   "requisito": "sem_falta_grave_12_meses",
+   "desde_fato": "2020-01-23",
+   "fonte": "CP art.83,III,b (Lei 13.964); Tema 1161 (questão)",
+   "direcao": "gravosa_irretroativa"
+  },
+  "subjetivo": {
+   "regra": "historico_integral",
+   "fonte": "STJ Tema 1161"
+  },
+  "falta_nao_interrompe": {
+   "fonte": "Súm.441/STJ; Tema 709"
+  },
+  "vedacoes_por_era": "ver progressao.eras (art.112 VI/VIII e 15.358)",
+  "revogacao": {
+   "obrigatoria": "condenacao_irrecorrivel_ppl (crime na vigência: sem desconto/sem novo LC; crime anterior: desconta e admite novo)",
+   "facultativa": "descumprimento_ou_pena_nao_privativa",
+   "fonte": "CP arts.86-88; LEP art.140"
+  },
+  "extincao_fim_periodo_prova": {
+   "dispositivo": "[CONFERIR CP art.90]",
+   "pendencia": "P-12"
+  },
+  "prorrogacao_por_crime_sem_transito": {
+   "status": "sem_precedente_qualificado_na_base",
+   "exibir_nota": true,
+   "pendencia": "P-13"
+  }
+ },
+ "decretos": {
+  "d12790_2025": {
+   "marco": "2025-12-25",
+   "publicacao": "2025-12-23",
+   "fonte": "DOU 23/12/2025 (Câmara/Planalto)",
+   "impeditivos_art1": {
+    "incisos": [
+     "hediondos_8072",
+     "tortura_9455",
+     "lavagem_9613|exceto_pena<=4a",
+     "orcrim_12850+288A",
+     "terrorismo_13260",
+     "racismo_7716",
+     "cp149_149A",
+     "genocidio_2889",
+     "sfn_7492|exceto<=4a",
+     "licitacoes_14133_8666|exceto<=4a",
+     "cp215_216A_217A_218a218C",
+     "cp312a319_333|exceto<=4a",
+     "eca239a244B",
+     "ambientais_9605",
+     "cp359Ia359R",
+     "abuso_13869",
+     "vcm_121A_147A_11340_13718_14192",
+     "trafico_33caput§1_34a37_39|privilegiado_33§4_NAO_impeditivo",
+     "cpm_correspondentes"
+    ],
+    "vedacoes_subjetivas": {
+     "colaboracao_premiada": "§1º",
+     "lideranca_faccao": "§3º,I (negativa exige elementos objetivos §4º; renovável §5º)",
+     "rdd": "§3º,II",
+     "presidio_federal_seg_maxima": "§3º,III"
+    }
+   },
+   "aplicacao": {
+    "alcance_art2_3": [
+     "transito_so_acusacao",
+     "recurso_acusacao_nao_majorante",
+     "livramento",
+     "aberto_domiciliar_sursis_prd",
+     "sem_guia"
+    ],
+    "multa_nao_impede": "art.4º,p.u.; art.12 (presunções de pobreza §2º, inclui Defensoria)",
+    "tempo_computavel_art5": [
+     "cautelar",
+     "domiciliar",
+     "especial",
+     "recolhimento_noturno",
+     "remicao_homologada"
+    ],
+    "falta_art6": {
+     "janela": [
+      "2024-12-25",
+      "2025-12-25"
+     ],
+     "criterio": "ocorrencia_na_janela (Tema 1195 retificado, EDcl REsp 2.011.706/MG, DJe 22/06/2026)",
+     "excecao_mora_estatal": true,
+     "pos_publicacao_nao_impede": "art.6º,p.u. — REGRA DE OURO"
+    },
+    "soma_art7": {
+     "ate": "2025-12-25",
+     "pedagio_concurso_impeditivo": "2/3 do impeditivo antes do benefício sobre o comum"
+    },
+    "veda_requisitos_extras": "art.8º (inclusive exame criminológico)"
+   },
+   "indulto_art9": [
+    {
+     "inc": "I",
+     "violencia": false,
+     "teto_anos": 8,
+     "fracao": {
+      "primario": "1/5",
+      "reincidente": "1/3"
+     }
+    },
+    {
+     "inc": "II",
+     "violencia": false,
+     "teto_anos": 12,
+     "fracao": {
+      "primario": "1/3",
+      "reincidente": "1/2"
+     }
+    },
+    {
+     "inc": "III",
+     "violencia": true,
+     "teto_anos": 4,
+     "fracao": {
+      "primario": "1/3",
+      "reincidente": "1/2"
+     }
+    },
+    {
+     "inc": "IV",
+     "tempo_anos": {
+      "primario": 15,
+      "reincidente": 20
+     },
+     "ininterrupto": true
+    },
+    {
+     "inc": "V",
+     "tempo_anos": {
+      "primario": 20,
+      "reincidente": 25
+     },
+     "ininterrupto": false,
+     "liberdade_max_anos": 2
+    },
+    {
+     "inc": "VI",
+     "regime": "semiaberto",
+     "tempo_anos": {
+      "primario": 10,
+      "reincidente": 15
+     },
+     "ininterrupto": true
+    },
+    {
+     "inc": "VII",
+     "situacao": [
+      "aberto",
+      "prd",
+      "sursis"
+     ],
+     "fracao": {
+      "primario": "1/6",
+      "reincidente": "1/5"
+     }
+    },
+    {
+     "inc": "VIII",
+     "situacao": [
+      "livramento",
+      "aberto"
+     ],
+     "remanescente_max_anos": {
+      "primario": 6,
+      "reincidente": 4
+     },
+     "aferido_em": "2025-12-25"
+    },
+    {
+     "inc": "IX",
+     "situacao": "egresso_res307_cnj_2anos_parecer"
+    },
+    {
+     "inc": "X",
+     "situacao": "semiaberto_monitorado_sv56_3anos"
+    },
+    {
+     "inc": "XI",
+     "teto_anos": 12,
+     "fracao": {
+      "primario": "1/3",
+      "reincidente": "1/2"
+     },
+     "extra": "5_saidas_temporarias_OU_12m_trabalho_externo_em_3anos"
+    },
+    {
+     "inc": "XII",
+     "teto_anos": 12,
+     "fracao": {
+      "primario": "1/6",
+      "reincidente": "1/5"
+     },
+     "estudo_meses": {
+      "primario": [
+       12,
+       3
+      ],
+      "reincidente": [
+       18,
+       5
+      ]
+     }
+    },
+    {
+     "inc": "XIII",
+     "teto_anos": 12,
+     "fracao": {
+      "primario": "1/5",
+      "reincidente": "1/4"
+     },
+     "extra": "conclusao_curso_certificada_3anos"
+    },
+    {
+     "inc": "XIV",
+     "patrimonial_sem_violencia": true,
+     "bem_max": "1_salario_minimo_epoca",
+     "tempo": "3_meses"
+    },
+    {
+     "inc": "XV",
+     "patrimonial_sem_violencia": true,
+     "extra": "reparacao_dano_cp16_ou_65IIIb"
+    },
+    {
+     "inc": "XVI",
+     "humanitario": [
+      "deficiencia_fisica_grave",
+      "hiv_terminal",
+      "gestacao_alto_risco",
+      "doenca_grave_com_limitacao|presuncoes_§1º",
+      "tea_grau3"
+     ],
+     "prova": "laudo_medico"
+    }
+   ],
+   "redutor_metade_art9§2": {
+    "aplica_incisos": "I-XI",
+    "beneficiarios": [
+     "60+",
+     "maes_gestantes_filho16_pcd",
+     "pais_unicos",
+     "cuidadores_imprescindiveis",
+     "pcd",
+     "justica_restaurativa_res225"
+    ],
+    "vedacao_§3": "violencia_contra_filho_crianca"
+   },
+   "mulheres_art10_11": {
+    "indulto_especial": "cumulativo: sem outro crime violento + SEM punição por falta grave (sem janela) + hipóteses a-d (1/8)",
+    "comutacoes": {
+     "reinc_<=8a_1/3": "1/4",
+     "primaria_filho16": "2/3",
+     "reinc_filho16": "1/2"
+    }
+   },
+   "comutacao_art13": {
+    "proporcao": "1/5_do_remanescente",
+    "requisito": {
+     "primario": "1/5",
+     "reincidente": "1/4"
+    },
+    "§1": "base = cumprido (descontadas comutações) SE cumprido > remanescente",
+    "§2": "comutacao_anterior => nova_sem_novo_requisito_temporal",
+    "§3": "nao_cumulativas_aplica_mais_benefica",
+    "§4": "beneficiarios_do_art9§2 => proporcao 2/3",
+    "§5": "indulto_prevalece_sobre_comutacao"
+   },
+   "finais": {
+    "reincidencia_aferida_em": "2025-12-25",
+    "iniciativa": "ampla_inclusive_oficio_sem_capacidade_postulatoria",
+    "preferencia": "sobre_qualquer_incidente",
+    "registro": "SEEU_BNMP"
+   }
+  },
+  "d12338_2024": {
+   "marco": "2024-12-25",
+   "publicacao": "2024-12-23",
+   "vigencia": "2024-12-23 (DOU edicao extra)",
+   "fonte": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/decreto/d12338.htm (espelho integral conferido em direitohd.com, reproducao do Planalto)",
+   "estrutura": "ESPELHO do d12790_2025 (arts.1-19, mesmos incisos do art.9, mesmos §§ do art.13)",
+   "herda_de": "d12790_2025",
+   "deltas_vs_12790": {
+    "todas_as_datas": "25/12/2025 -> 25/12/2024 (janela art.6: 25/12/2023 a 25/12/2024)",
+    "art9_§2_II_III": "filho ate 14 anos (2025: 16 anos) - redutor de metade mais restrito",
+    "art10_III_a_b": "filhos/netos ate 12 anos E fracao 1/6 (2025: 16 anos e 1/8)",
+    "art10_III_c": "fracao 1/6 (2025: 1/8)",
+    "art1_§3_caput": "texto 'indulto coletivo concedido' (2025 estendeu expressamente a vedacao subjetiva tambem a comutacao)",
+    "art9_XI": "cita art.122 c/c 124 caput LEP (2025 so art.122 - sem efeito pratico; 124 revogado pela 14.843/2024)"
+   },
+   "identicos": [
+    "art.1 rol I-XIX e §§1-2,4-5",
+    "arts.2-8",
+    "art.9 incisos I-XVI e §§1,3,4",
+    "art.11",
+    "art.12",
+    "art.13 §§1-5 (inclusive base no cumprido, sem novo requisito, indulto prevalece)",
+    "arts.14-19"
+   ],
+   "regra_motor": "rodar ambos os decretos por caso; verificar cada marco com a situacao do apenado NA DATA respectiva; o nao requerido/indeferido de um ano nao prejudica o do outro"
+  }
+ },
+ "hediondez": {
+  "fonte_primaria": "http://www.planalto.gov.br/ccivil_03/leis/l8072.htm (compilado, todas as redacoes)",
+  "regra_dupla_ancora": {
+   "defensiva": {
+    "ancora": "data_do_fato",
+    "fonte": "STJ (irretroatividade — ex.: AgRg REsp/HCs 2021-2024 sobre 157,§2º-A,I)"
+   },
+   "restritiva": {
+    "ancora": "data_do_decreto",
+    "fonte": "corrente TJ (ex.: TJRJ)"
+   },
+   "saida": "exibir_ambos_cenarios_com_precedentes"
+  },
+  "politica": "vigencia_exata=[CONFERIR DOU] impede uso no calculo automatico; ano confirmado permite alerta",
+  "rol_art1": [
+   {
+    "inc": "caput/original",
+    "disp": "latrocinio 157§3 in fine; extorsao morte 158§2; ext.med.sequestro 159; estupro 213+223; atentado pudor 214+223; epidemia morte 267§1; envenenamento 270+285; genocidio",
+    "desde": "1990-07-26",
+    "fonte": "8.072/90 orig., DOU 26/07/1990"
+   },
+   {
+    "inc": "I",
+    "disp": "homicidio grupo exterminio + 121§2 I-V",
+    "desde": "1994-09-06",
+    "fonte": "Lei 8.930/94"
+   },
+   {
+    "inc": "I",
+    "disp": "+121§2,VI (feminicidio qualif.)",
+    "desde": "[CONFERIR DOU 2015]",
+    "ate": "14.994/2024",
+    "fonte": "Lei 13.104/2015"
+   },
+   {
+    "inc": "I",
+    "disp": "+121§2,VII (agentes seguranca)",
+    "desde": "[CONFERIR DOU 2015]",
+    "fonte": "Lei 13.142/2015"
+   },
+   {
+    "inc": "I",
+    "disp": "+121§2,VIII (arma de fogo restrito/proibido)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "I",
+    "disp": "+121§2,IX (menor14)",
+    "desde": "[CONFERIR clausula de vigencia]",
+    "fonte": "Lei 14.344/2022 (tem art. de vigencia propria)"
+   },
+   {
+    "inc": "I",
+    "disp": "121§2 I-V,VII-IX (retira VI)",
+    "desde": "2024-10-09",
+    "fonte": "Lei 14.994/2024"
+   },
+   {
+    "inc": "I",
+    "disp": "TODO o 121§2 (qualquer qualificadora)",
+    "desde": "[CONFERIR DOU 2025]",
+    "fonte": "Lei 15.159/2025",
+    "alerta": "gravosa; so fatos posteriores"
+   },
+   {
+    "inc": "I-A",
+    "disp": "129§2/§3 contra agentes seguranca (142/144 CF, sist.prisional, FNSP) e familiares",
+    "desde": "[CONFERIR DOU 2015]",
+    "fonte": "Lei 13.142/2015"
+   },
+   {
+    "inc": "I-A,b",
+    "disp": "+membros Judiciario/MP/Defensoria/Adv.Publica/oficial justica",
+    "desde": "[CONFERIR DOU 2025]",
+    "fonte": "Lei 15.134/2025"
+   },
+   {
+    "inc": "I-A,c",
+    "disp": "+em dependencias de instituicao de ensino",
+    "desde": "[CONFERIR DOU 2025]",
+    "fonte": "Lei 15.159/2025"
+   },
+   {
+    "inc": "I-B",
+    "disp": "feminicidio autonomo (CP 121-A)",
+    "desde": "2024-10-09",
+    "fonte": "Lei 14.994/2024"
+   },
+   {
+    "inc": "I-C",
+    "disp": "vicaricidio (CP 121-B)",
+    "desde": "[CONFERIR DOU 2026]",
+    "fonte": "Lei 15.384/2026"
+   },
+   {
+    "inc": "II",
+    "disp": "latrocinio 157§3 in fine",
+    "desde": "1990-07-26",
+    "fonte": "orig.; renumerado 8.930/94"
+   },
+   {
+    "inc": "II,a",
+    "disp": "roubo restricao liberdade (157§2,V)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "II,b",
+    "disp": "roubo arma de fogo (157§2-A,I) e arma proibida/restrita (157§2-B)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019; STJ: irretroativo (dupla ancora)"
+   },
+   {
+    "inc": "II,c",
+    "disp": "roubo qualif. lesao grave OU morte (157§3 integral)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019 (lesao grave e nova; morte ja era)"
+   },
+   {
+    "inc": "III",
+    "disp": "extorsao morte 158§2",
+    "desde": "1990-07-26",
+    "ate": "2020-01-22",
+    "fonte": "orig./8.930"
+   },
+   {
+    "inc": "III",
+    "disp": "extorsao 158§3 (restricao liberdade c/ lesao ou morte)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019",
+    "alerta": "158§2 SAIU do rol em 2020 - abolitio da hediondez, retroage"
+   },
+   {
+    "inc": "IV",
+    "disp": "extorsao mediante sequestro 159 caput/§§1-3",
+    "desde": "1990-07-26",
+    "fonte": "orig./8.930"
+   },
+   {
+    "inc": "V",
+    "disp": "estupro 213 caput/§§1-2",
+    "desde": "2009-08-07",
+    "fonte": "Lei 12.015/2009 [CONFERIR dia]; antes: 213+223 desde 1990"
+   },
+   {
+    "inc": "VI",
+    "disp": "estupro de vulneravel 217-A",
+    "desde": "2009-08-07",
+    "fonte": "Lei 12.015/2009 [CONFERIR dia]; antes: atentado pudor 214"
+   },
+   {
+    "inc": "VII",
+    "disp": "epidemia com morte 267§1",
+    "desde": "1990-07-26",
+    "fonte": "orig./8.930"
+   },
+   {
+    "inc": "VII-B",
+    "disp": "falsificacao produto terapeutico/medicinal 273",
+    "desde": "[CONFERIR DOU 1998]",
+    "fonte": "Lei 9.695/1998"
+   },
+   {
+    "inc": "VIII",
+    "disp": "favorecimento prostituicao crianca/vulneravel 218-B",
+    "desde": "[CONFERIR DOU 2014]",
+    "fonte": "Lei 12.978/2014"
+   },
+   {
+    "inc": "IX",
+    "disp": "furto com explosivo 155§4-A",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "X",
+    "disp": "induzimento suicidio/automutilacao via internet 122 caput/§4",
+    "desde": "[CONFERIR DOU 2024]",
+    "fonte": "Lei 14.811/2024"
+   },
+   {
+    "inc": "XI",
+    "disp": "sequestro/carcere privado contra menor de 18 (148§1,IV)",
+    "desde": "[CONFERIR DOU 2024]",
+    "fonte": "Lei 14.811/2024"
+   },
+   {
+    "inc": "XII",
+    "disp": "trafico de pessoas contra crianca/adolescente 149-A",
+    "desde": "[CONFERIR DOU 2024]",
+    "fonte": "Lei 14.811/2024"
+   }
+  ],
+  "rol_paragrafo_unico": [
+   {
+    "inc": "p.u. I",
+    "disp": "genocidio (Lei 2.889/56)",
+    "desde": "1990-07-26",
+    "fonte": "orig.; p.u. 8.930/94; inciso I 13.964"
+   },
+   {
+    "inc": "p.u. II",
+    "disp": "posse/porte arma USO PROIBIDO (Estatuto 16)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "(historico)",
+    "disp": "posse/porte arma USO RESTRITO",
+    "desde": "[CONFERIR DOU 2017]",
+    "ate": "2020-01-22",
+    "fonte": "Lei 13.497/2017; EXCLUIDO pela 13.964: ABOLITIO da hediondez, retroage pro reo"
+   },
+   {
+    "inc": "p.u. III",
+    "disp": "comercio ilegal de armas (Estatuto 17)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "p.u. IV",
+    "disp": "trafico internacional arma/acessorio/municao (Estatuto 18)",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "p.u. V",
+    "disp": "organizacao criminosa direcionada a hediondo",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   },
+   {
+    "inc": "p.u. VI",
+    "disp": "crimes do CPM com identidade aos do art.1",
+    "desde": "[CONFERIR DOU 2023]",
+    "fonte": "Lei 14.688/2023"
+   },
+   {
+    "inc": "p.u. VII",
+    "disp": "ECA 240§1 e 241-B (pornografia infantil)",
+    "desde": "[CONFERIR DOU 2024]",
+    "fonte": "Lei 14.811/2024"
+   },
+   {
+    "inc": "p.u. VII",
+    "disp": "ampliado: ECA 240, 241, 241-A, 241-B, 241-D, 244-A",
+    "desde": "[CONFERIR DOU 2026]",
+    "fonte": "Lei 15.487/2026"
+   },
+   {
+    "inc": "p.u. VIII",
+    "disp": "dominio social estruturado e favorecimento (Lei 15.358, arts.2/3)",
+    "desde": "2026-03-24",
+    "fonte": "Lei 15.358/2026"
+   }
+  ],
+  "equiparados": {
+   "disp": "tortura, trafico (exceto privilegiado p/ execucao), terrorismo",
+   "fonte": "CF 5,XLIII; 8.072 art.2"
+  },
+  "regime_e_progressao_art2": [
+   {
+    "regra": "integralmente fechado",
+    "desde": "1990-07-26",
+    "ate": "[CONFERIR DOU 11.464/2007]",
+    "nota": "inconstitucional HC 82.959/STF"
+   },
+   {
+    "regra": "inicialmente fechado + 2/5-3/5",
+    "desde": "[CONFERIR DOU 2007-03]",
+    "ate": "2020-01-22",
+    "fonte": "Lei 11.464/2007; SV 26"
+   },
+   {
+    "regra": "revogado §2 - frac. no art.112 LEP",
+    "desde": "2020-01-23",
+    "fonte": "Lei 13.964/2019"
+   }
+  ]
+ },
+ "superados": [
+  {
+   "tese": "Só faltas homologadas dentro dos 12 meses obstam comutação",
+   "paradigma_superado": "EREsp 1.549.544/RS",
+   "superado_por": "Tema 1195 retificado (EDcl REsp 2.011.706/MG, DJe 22/06/2026)"
+  }
+ ],
+ "vigilancia": [
+  {
+   "id": "P-10",
+   "objeto": "Tema 1319/STF (sobrestamento do Tema 1196/STJ)",
+   "afeta": [
+    "progressao.eras.era2.lacunas",
+    "livramento.fracoes"
+   ],
+   "tribunais": [
+    "STF"
+   ],
+   "termos": [
+    "Tema 1319",
+    "retroatividade progressão hediondo"
+   ]
+  },
+  {
+   "id": "P-11",
+   "objeto": "ADIs 7966 e 7967 (Lei 15.402/2026)",
+   "afeta": [
+    "progressao.eras.era3b"
+   ],
+   "tribunais": [
+    "STF"
+   ],
+   "termos": [
+    "ADI 7966",
+    "ADI 7967",
+    "Lei 15.402"
+   ]
+  },
+  {
+   "id": "decreto_anual",
+   "objeto": "Novo decreto de indulto (dez/2026)",
+   "afeta": [
+    "decretos"
+   ],
+   "termos": [
+    "indulto natalino decreto 2026"
+   ]
+  }
+ ]
+}
