@@ -1,6 +1,6 @@
 {
  "meta": {
-  "versao": "2026.08.2",
+  "versao": "2026.08.3",
   "schema_version": 1,
   "publicado_em": "2026-08-16",
   "dossies_fonte": [
@@ -17,7 +17,7 @@
    "data_do_decreto": "requisitos de indulto/comutação aferidos no marco do decreto",
    "data_da_falta": "cometimento; fuga = infração permanente, protrai até a recaptura (STJ AgRg HC 779723; HC 527625)"
   },
-  "changelog": "Mapeado Decreto 12.338/2024 (espelho do 12.790 com deltas); Fase 2 de conteudo concluida"
+  "changelog": "Novo bloco feed (atualizações jurisprudenciais curadas, renderizadas na aba Precedentes do app)"
  },
  "prescricao": {
   "prazos_art109": [
@@ -912,6 +912,50 @@
    "termos": [
     "indulto natalino decreto 2026"
    ]
+  }
+ ],
+ "feed": [
+  {
+   "data": "22/06/26",
+   "tribunal": "STJ",
+   "titulo": "Tema 1195 — tese retificada em embargos",
+   "resumo": "Janela de 12 meses dos decretos de indulto passa a olhar a ocorrência da falta grave, ainda que apurada depois, salvo mora estatal na instauração de procedimento apuratório. Supera a linha do EREsp 1.549.544.",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1195&cod_tema_final=1195"
+  },
+  {
+   "data": "2026",
+   "tribunal": "STJ",
+   "titulo": "Tema 1354 — percentuais distintos por condenação na mesma execução",
+   "resumo": "Terceira Seção: aplica-se a cada condenação, isoladamente, a norma mais favorável — retroatividade da Lei 13.964/2019 e ultratividade da redação anterior do art. 112 da LEP.",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1354&cod_tema_final=1354"
+  },
+  {
+   "data": "08/05/26",
+   "tribunal": "Legislação",
+   "titulo": "Lei 15.402/2026 reestrutura o art. 112 da LEP",
+   "resumo": "Caput volta a 1/6 + mérito com novos incisos I-III; vetos aos incisos V-X mantidos (percentuais de hediondos seguem a Lei 15.358/2026: 70-85%). Sob ADIs 7966/7967.",
+   "url": "https://www.legjur.com/legislacao/art/lei_00072101984-112"
+  },
+  {
+   "data": "24/03/26",
+   "tribunal": "Legislação",
+   "titulo": "Lei 15.358/2026 (Antifacção) eleva frações de hediondos e cria p.u. VIII na 8.072",
+   "resumo": "Progressão de hediondos a 70/75/80/85% para fatos posteriores; feminicídio migra para o inciso VI, d; domínio social estruturado entra no rol de equiparados.",
+   "url": "https://www.planalto.gov.br/ccivil_03/leis/l8072.htm"
+  },
+  {
+   "data": "06/26",
+   "tribunal": "STJ",
+   "titulo": "Exame criminológico obrigatório: só para crimes posteriores à Lei 14.843/2024",
+   "resumo": "Ambas as Turmas reafirmam em 2026: a exigência é novatio legis in pejus e não retroage; para fatos anteriores, exigência só com fundamentação concreta (Súm. 439; SV 26).",
+   "url": "https://processo.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202601517175&dt_publicacao=22/06/2026"
+  },
+  {
+   "data": "perm.",
+   "tribunal": "STJ",
+   "titulo": "Tema 1165 — data-base da progressão é a do implemento dos requisitos",
+   "resumo": "Decisão que defere progressão é declaratória: o termo para o benefício seguinte é a data em que preenchidos os requisitos, não a data da decisão. Ponto de auditoria recorrente nos atestados.",
+   "url": "https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&cod_tema_inicial=1165&cod_tema_final=1165"
   }
  ]
 }
