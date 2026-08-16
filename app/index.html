@@ -234,7 +234,7 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
     <section class="tela" id="calc">
       <div class="calc-wrap">
         <div class="calc-nav" id="calc-nav">
-          <span class="on" data-c="prog">Progressão</span><span data-c="presc">Prescrição</span><span data-c="livr">Livramento</span><span data-c="indcom">Indulto · Comutação</span><span data-c="remdet">Remição · Detração</span><span data-c="unif">Unificação</span>
+          <span class="on" data-c="prog">Progressão</span><span data-c="frac">Frações da pena</span><span data-c="presc">Prescrição</span><span data-c="livr">Livramento</span><span data-c="indcom">Indulto · Comutação</span><span data-c="remdet">Remição · Detração</span><span data-c="unif">Unificação</span>
         </div>
         <div>
           <!-- Progressão -->
@@ -250,6 +250,18 @@ input[type=checkbox]{accent-color:var(--acento);width:15px;height:15px}
             <button class="btn" id="pg-go" type="button">Calcular</button>
             <div class="resultado" id="pg-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span><div class="data" id="pg-data">—</div><div class="mem" id="pg-mem"></div></div>
             <p class="nota">Fração escolhida pela era da data do fato, aplicando-se a mais favorável entre as leis sucessivas (STJ, Tema 1354). Contagem civil exata.</p>
+          </div>
+          <!-- Frações -->
+          <div class="card cmod" id="cm-frac"><h3>Frações da pena — conferência rápida</h3>
+            <div class="form">
+              <div class="campo"><label>Pena (a·m·d)</label><div class="pena3"><input id="fr-a" type="number" min="0" placeholder="anos"><input id="fr-m" type="number" min="0" placeholder="meses"><input id="fr-d" type="number" min="0" placeholder="dias"></div></div>
+              <div class="campo"><label>Data-base (opcional — projeta a data de cada fração)</label><input type="date" id="fr-base"></div>
+              <div class="campo"><label>Remição a abater (dias, opcional)</label><input id="fr-rem" type="number" min="0" placeholder="0"></div>
+            </div>
+            <button class="btn" id="fr-go" type="button">Gerar tabela</button>
+            <div class="resultado" id="fr-res"><span class="selo s-conf">[CONFERIR CÁLCULO]</span>
+              <div style="overflow-x:auto"><table id="fr-tab" style="margin-top:10px"></table></div></div>
+            <p class="nota">Frações usuais da execução (progressão nas três eras, livramento, decretos). "Mais de" do livramento = 1 dia além da fração exata. Contagem civil.</p>
           </div>
           <!-- Prescrição -->
           <div class="card cmod" id="cm-presc"><h3>Prescrição da pretensão executória</h3>
@@ -587,6 +599,27 @@ $("pg-go").onclick=()=>{
   mostraRes("pg",fmtData(dt),[["Era aplicada",nomeEra],["Fração",(frac*100).toFixed(2).replace(/\\.00$/,"")+"%"],
    ["Pena considerada",fmtDias(dias)+" ("+dias+" dias)"],["Requisito objetivo",exig+" dias"],
    ["(−) remição",N($("pg-rem").value)+" dias"],["Data-base + "+liq+" dias",fmtData(dt)]]);};
+/* Frações da pena */
+$("fr-go").onclick=()=>{
+  const dias=penaDias($("fr-a").value,$("fr-m").value,$("fr-d").value);
+  if(!dias){$("fr-tab").innerHTML="<tr><td>Informe a pena.</td></tr>";$("fr-res").classList.add("on");return;}
+  const base=$("fr-base").value?D($("fr-base").value):null,rem=N($("fr-rem").value);
+  const F=[["1/6 — comum (era atual/pré-2020)",1/6],["16% — primário s/ violência (Anticrime)",.16],
+   ["1/5 — indulto/decretos",1/5],["20% — reincidente s/ violência (Anticrime)",.20],
+   ["1/4 — comutação reincidente",1/4],["25% — primário c/ violência",.25],["30% — reincidente c/ violência",.30],
+   ["1/3 — livramento não reincidente*",1/3],["2/5 — hediondo primário (pré-2020)",2/5],
+   ["40% — hediondo primário (Anticrime)",.40],["1/2 — livramento reincidente*",1/2],
+   ["50% — hediondo c/ morte primário (Anticrime)",.50],["3/5 — hediondo reincidente (pré-2020)",3/5],
+   ["60% — hediondo reinc. específico (Anticrime)",.60],["2/3 — livramento hediondo* / pedágio",2/3],
+   ["70% — hediondo primário (Lei 15.358)",.70],["75% — hediondo c/ morte prim. (15.358)",.75],
+   ["80% — hediondo reincidente (15.358)",.80],["85% — hediondo c/ morte reinc. (15.358)",.85]];
+  let rows="<tr><th>Fração</th><th>Dias</th><th>Tempo</th>"+(base?"<th>Data projetada</th>":"")+"</tr>";
+  F.forEach(([lb,f])=>{const mais=lb.includes("*");let ex=Math.ceil(dias*f)+(mais?( Number.isInteger(dias*f)?1:0):0);
+    const liq=Math.max(ex-rem,0);
+    rows+="<tr><td>"+lb+"</td><td class='mono'>"+ex+"</td><td class='mono'>"+fmtDias(ex)+"</td>"+
+      (base?"<td class='mono'>"+fmtData(addDias(base,liq))+"</td>":"")+"</tr>";});
+  $("fr-tab").innerHTML=rows+(rem&&base?"<tr><td colspan='4' class='nota'>Datas já descontam "+rem+" dias de remição.</td></tr>":"");
+  $("fr-res").classList.add("on");};
 /* Prescrição */
 $("ps-go").onclick=()=>{
   const dias=penaDias($("ps-a").value,$("ps-m").value,$("ps-d").value);
